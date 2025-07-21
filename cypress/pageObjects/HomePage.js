@@ -11,17 +11,17 @@ class HomePage {
     }
 
        browseOurPortfolioButtonLocator = 'a[data-id="browse-our-portfolio-button"]'
-       caboImageLocator = '//div[contains(text(),"Cabo")]'
+       caboImageLocator = 'div'
        caboPageHeading = 'h1 span'
-       londonImageLocator = '//div[contains(text(),"London")]'
+       londonImageLocator = 'div'
        londonPageHeading = 'h1 span'
-       parisImageLocator = '//div[contains(text(),"Paris")]'
+       parisImageLocator = 'div'
        closeTooltipLocator ='div h1'
        parisPageHeading = 'div h1'
-       puntaMitaImageLocator = '//div[contains(text(),"Punta Mita")]'
+       puntaMitaImageLocator = 'div'
        internationalContactPageHeading = 'span b'
-       browseDestinationsLinkLocator = '//a//span[contains(text(),"Browse Destinations")]'
-       learnMoreButtonLocator = '//button[contains(text(),"Learn more")]'
+       browseDestinationsLinkLocator = 'a span'
+       learnMoreButtonLocator = 'button'
        schedulingPageHeading = 'h1.type-h2'
        designCertifiedHomesPageHeading = 'h1.type-h2'
        swapPageHeading = 'h1.type-h2'
@@ -33,7 +33,7 @@ class HomePage {
        }
 
        clickCaboImage() {
-        return Elements.clickFIRSTELEMENTWithXPATH(this.caboImageLocator)
+        return Elements.clickFIRSTELEMENTWithCSSContainingText(this.caboImageLocator, 'Cabo')
        }
 
        verifyPageURL() {
@@ -45,7 +45,7 @@ class HomePage {
        }
 
        clickLondonImage() {
-        return Elements.clickFIRSTELEMENTWithXPATH(this.londonImageLocator)
+        return Elements.clickFIRSTELEMENTWithCSSContainingText(this.londonImageLocator, 'London')
        }
 
        verifyLondonPageHeading() {
@@ -53,7 +53,7 @@ class HomePage {
        }
 
        clickParisImage() {
-        return Elements.clickFIRSTELEMENTWithXPATH(this.parisImageLocator)
+        return Elements.clickFIRSTELEMENTWithCSSContainingText(this.parisImageLocator, 'Paris')
        }
 
        closeTooltip() {
@@ -65,7 +65,7 @@ class HomePage {
        }
 
        clickPuntaMitaImage() {
-        return Elements.clickFIRSTELEMENTWithXPATH(this.puntaMitaImageLocator)
+        return Elements.clickFIRSTELEMENTWithCSSContainingText(this.puntaMitaImageLocator, 'Punta Mita')
        }
 
        verifyInternationalContactPageHeading() { 
@@ -73,11 +73,11 @@ class HomePage {
        }
 
        clickBrowseDestinationsLink() {
-        return Elements.clickWithXPATH(this.browseDestinationsLinkLocator)
+        return Elements.clickWithCSSContaningText(this.browseDestinationsLinkLocator, 'Browse Destinations')
        }
 
        clickLearnMoreButtonForScheduling() {
-        return Elements.clickXPATHELEMENTWithINDEX(this.learnMoreButtonLocator, 1)
+        return Elements.clickCSSELEMENTWithINDEXContainingText(this.learnMoreButtonLocator, 1, 'Learn more')
        }
 
        verifySchedulingPageHeading() {
@@ -85,7 +85,7 @@ class HomePage {
        }
        
        clickLearnMoreButtonForDesignCertifiedHomes() {
-        return Elements.clickXPATHELEMENTWithINDEX(this.learnMoreButtonLocator, 0)
+        return Elements.clickCSSELEMENTWithINDEXContainingText(this.learnMoreButtonLocator, 0, 'Learn more')
        }
 
        verifyDesignCertifiedHomesPageHeading() {
@@ -93,7 +93,7 @@ class HomePage {
        }
 
        clickLearnMoreButtonForSwap() {
-        return Elements.clickXPATHELEMENTWithINDEX(this.learnMoreButtonLocator, 2)
+        return Elements.clickCSSELEMENTWithINDEXContainingText(this.learnMoreButtonLocator, 2, 'Learn more')
        }
 
        verifySwapPageHeading() {

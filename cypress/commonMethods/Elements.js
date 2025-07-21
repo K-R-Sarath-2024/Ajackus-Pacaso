@@ -8,12 +8,6 @@ class Elements {
 
     } 
 
-    static xpathVERIFY(xpathLocator) {
-
-        return cy.xpath(xpathLocator).should('be.visible')
-
-    }
-
     static clickWithCSS(cssLocator)
     {
 
@@ -21,25 +15,11 @@ class Elements {
 
     }
 
-    static clickWithXPATH(xpathLocator)
+    static clickWithCSSContaningText(cssLocator, text) 
     {
 
-        return cy.xpath(xpathLocator).should('be.visible').click()
+        return cy.get(cssLocator).contains(text).should('be.visible').click()
 
-    }
-
-    static clickFIRSTELEMENTWithXPATH(xpathLocator)
-    {
-
-        return cy.xpath(xpathLocator).first().should('be.visible').click()
-    
-    }
-
-    static clickXPATHELEMENTWithINDEX(xpathLocator, index)
-    {
-        
-        return cy.xpath(xpathLocator).eq(index).should('be.visible').click()
-    
     }
 
     static clickCSSELEMENTWithINDEX(cssLocator, index)
@@ -49,10 +29,24 @@ class Elements {
     
     }
 
+    static clickCSSELEMENTWithINDEXContainingText(cssLocator, index, text)
+    {
+        
+        return cy.get(cssLocator).contains(text).eq(index).should('be.visible').click()
+    
+    }
+
     static clickFIRSTELEMENTWithCSS(cssLocator)
     {
         
         return cy.get(cssLocator).first().should('be.visible').click()
+    
+    }
+
+    static clickFIRSTELEMENTWithCSSContainingText(cssLocator, text)
+    {
+        
+        return cy.get(cssLocator).contains(text).first().should('be.visible').click()
     
     }
 
@@ -66,12 +60,6 @@ class Elements {
     static enterValueWithCSS(cssLocator, enterText) {
             
         return cy.get(cssLocator).should('be.visible').type(enterText)
-
-    }
-
-    static enterValueWithXPATH(xpathLocator, enterText) {
-            
-        return cy.xpath(xpathLocator).should('be.visible').type(enterText)
 
     }
 
