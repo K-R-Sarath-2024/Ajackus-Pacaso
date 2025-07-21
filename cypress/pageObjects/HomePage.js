@@ -23,6 +23,10 @@ class HomePage {
        browseDestinationsLinkLocator = '//a//span[contains(text(),"Browse Destinations")]'
        learnMoreButtonLocator = '//button[contains(text(),"Learn more")]'
        schedulingPageHeading = 'h1.type-h2'
+       designCertifiedHomesPageHeading = 'h1.type-h2'
+       swapPageHeading = 'h1.type-h2'
+       howItWorksButton = 'a[data-id="link"]'
+       coownershipPageHeading = 'h1.type-h2'
 
        clickBrowseOurPortfolioButton() {
         return Elements.clickWithCSS(this.browseOurPortfolioButtonLocator)
@@ -77,8 +81,32 @@ class HomePage {
        }
 
        verifySchedulingPageHeading() {
-        return Elements.xpathVERIFY(this.schedulingPageHeading)
-       }       
+        return Elements.cssVERIFY(this.schedulingPageHeading)
+       }
+       
+       clickLearnMoreButtonForDesignCertifiedHomes() {
+        return Elements.clickXPATHELEMENTWithINDEX(this.learnMoreButtonLocator, 0)
+       }
+
+       verifyDesignCertifiedHomesPageHeading() {
+        return Elements.cssVERIFY(this.designCertifiedHomesPageHeading)
+       }
+
+       clickLearnMoreButtonForSwap() {
+        return Elements.clickXPATHELEMENTWithINDEX(this.learnMoreButtonLocator, 2)
+       }
+
+       verifySwapPageHeading() {
+        return Elements.cssVERIFY(this.swapPageHeading)
+       }
+
+       clickHowItWorksButton() {
+        return Elements.clickWithCSS(this.howItWorksButton)
+       }
+
+       verifyCoOwnershipSimplifiedPageHeading() {
+        return Elements.cssVERIFY(this.coownershipPageHeading)
+       }
 }
 
 export default HomePage;

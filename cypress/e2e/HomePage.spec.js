@@ -7,8 +7,7 @@ describe('Home Page Functionalities', () => {
     
     it('Check whether clicking BROWSE OUR PORTFOLIO button navigates to the portfolio page', () => {
         homePage.clickBrowseOurPortfolioButton()
-        homePage.verifyPageURL().should('include', '/destinations')
-        
+        homePage.verifyPageURL().should('include', '/destinations')  
     })
 
     it('Check whether clicking on Cabo image navigates to Cabo Destinations page which has Cabos homes', () => {
@@ -45,6 +44,24 @@ describe('Home Page Functionalities', () => {
         homePage.clickLearnMoreButtonForScheduling()
         homePage.verifyPageURL().should('include', '/scheduling')
         homePage.verifySchedulingPageHeading().should('contain.text','Scheduling made easy')
+    })
+
+    it('Check whether clicking Learn More in Design section navigates to design certified homes page', () => {
+        homePage.clickLearnMoreButtonForDesignCertifiedHomes()
+        homePage.verifyPageURL().should('include', '/design-certified-homes')
+        homePage.verifyDesignCertifiedHomesPageHeading().should('contain.text','Pacaso Designed Homes')
+    })
+
+    it('Check whether clicking Learn More in Swap section navigates to swap page', () => {
+        homePage.clickLearnMoreButtonForSwap()
+        homePage.verifyPageURL().should('include', '/swap')
+        homePage.verifySwapPageHeading().should('contain.text','The power of swap')
+    })
+
+    it('Check whether clicking HOW IT WORKS button navigates to co-ownership simplified page', () => {
+        homePage.clickHowItWorksButton()
+        homePage.verifyPageURL().should('include', '/coownership')
+        homePage.verifyCoOwnershipSimplifiedPageHeading().should('contain.text','Co-﻿ownership, simplified')
     })
 
 
