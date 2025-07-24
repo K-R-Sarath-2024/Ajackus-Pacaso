@@ -17,8 +17,7 @@
 /// <reference types = "Cypress"/>
 
 import './commands'
-import 'cypress-xpath'
-import Elements from '../commonMethods/Elements'
+import Elements from '../common_methods/elements'
 
 beforeEach(() => {
     cy.visit('https://www.development.pacaso.com/', {
@@ -34,8 +33,8 @@ beforeEach(() => {
     });
 
     cy.get('body').then($body => {
-      if ($body.find('#CybotCookiebotDialog').length) {
-        Elements.clickWithCSS('#CybotCookiebotDialogBodyButtonAccept')
+      if ($body.find('#CybotCookiebotDialog').length !== 0) {
+        Elements.click_With_CSS('#CybotCookiebotDialogBodyButtonAccept')
       }
     });
 
