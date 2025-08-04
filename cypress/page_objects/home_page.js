@@ -33,20 +33,32 @@ class HomePage {
         return Elements.click_CSS_Element_With_Index(this.cabo_London_Paris_PuntaMita_Image_Locator, 1)
        }
 
-       verify_Page_URL() {
-        return Elements.verify_URL()
+/**
+ * @param {string} expectedURL
+ */        
+
+       verify_Page_URL(expectedURL) {
+        return Elements.verify_URL(expectedURL)
        }
 
-       verify_Cabo_Page_Heading() {
-        return Elements.css_Verify(this.cabo_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_Cabo_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.cabo_Page_Heading, expectedText)
        }
 
        click_London_Image() {
         return Elements.click_CSS_Element_With_Index(this.cabo_London_Paris_PuntaMita_Image_Locator, 2)
        }
 
-       verify_London_Page_Heading() {
-        return Elements.css_Verify(this.london_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_London_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.london_Page_Heading, expectedText)
        }
 
        click_Paris_Image() {
@@ -57,16 +69,24 @@ class HomePage {
         return Elements.click_First_Element_With_CSS(this.close_Tooltip_Locator)
        }
 
-       verify_Paris_Page_Heading() {
-        return Elements.verify_First_Element_With_CSS(this.paris_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_Paris_Page_Heading(expectedText) {
+        return Elements.verify_First_Element_With_CSS(this.paris_Page_Heading, expectedText)
        }
 
        click_Punta_Mita_Image() {
         return Elements.click_CSS_Element_With_Index(this.cabo_London_Paris_PuntaMita_Image_Locator, 5)
        }
 
-       verify_International_Contact_Page_Heading() { 
-        return Elements.css_Verify(this.international_Contact_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_International_Contact_Page_Heading(expectedText) { 
+        return Elements.css_Verify(this.international_Contact_Page_Heading, expectedText)
        }
 
        click_Browse_Destinations_Link() {
@@ -77,32 +97,48 @@ class HomePage {
         return Elements.click_CSS_Element_With_Index(this.learn_More_Button_Locator, 1)
        }
 
-       verify_Scheduling_Page_Heading() {
-        return Elements.css_Verify(this.scheduling_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_Scheduling_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.scheduling_Page_Heading, expectedText)
        }
        
        click_Learn_More_Button_For_Design_Certified_Homes() {
         return Elements.click_CSS_Element_With_Index(this.learn_More_Button_Locator, 0)
        }
 
-       verify_Design_Certified_Homes_Page_Heading() {
-        return Elements.css_Verify(this.design_Certified_Homes_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_Design_Certified_Homes_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.design_Certified_Homes_Page_Heading, expectedText)
        }
 
        click_Learn_More_Button_For_Swap() {
         return Elements.click_CSS_Element_With_Index(this.learn_More_Button_Locator, 2)
        }
 
-       verify_Swap_Page_Heading() {
-        return Elements.css_Verify(this.swap_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_Swap_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.swap_Page_Heading, expectedText)
        }
 
        click_How_It_Works_Button() {
         return Elements.click_With_CSS(this.how_It_Works_Button)
        }
 
-       verify_CoOwnership_Simplified_Page_Heading() {
-        return Elements.css_Verify(this.co_ownership_Page_Heading)
+/**
+ * @param {string} expectedText
+ */        
+
+       verify_CoOwnership_Simplified_Page_Heading(expectedText) {
+        return Elements.css_Verify(this.co_ownership_Page_Heading, expectedText)
        }
 }
 

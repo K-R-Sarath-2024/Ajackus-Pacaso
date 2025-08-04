@@ -1,16 +1,18 @@
 /// <reference types = "Cypress"/>
 import ElementsValidation from "./elements_validation";
+import Assertions from "./assertions";
 
 class Elements {
 
 /**
  * @param {string} cssLocator
+ * @param {string} expectedText
  */    
 
-    static css_Verify(cssLocator) {
+    static css_Verify(cssLocator, expectedText) {
 
         return ElementsValidation.validate_CSS_Locator(cssLocator).then(() => {
-            return cy.get(cssLocator).should('be.visible')
+            return Assertions.assert_Element_Contains_Text(cssLocator, expectedText)
         })
 
     } 
@@ -19,10 +21,10 @@ class Elements {
  * @param {string} cssLocator
  */     
 
-    static verify_First_Element_With_CSS(cssLocator) {
+    static verify_First_Element_With_CSS(cssLocator, expectedText) {
 
         return ElementsValidation.validate_CSS_Locator(cssLocator).then(() => {
-            return cy.get(cssLocator).first().should('be.visible')
+            return Assertions.assert_First_Element_Contains_Text(cssLocator, expectedText)
         })
 
     }
@@ -34,7 +36,7 @@ class Elements {
     static verify_Last_Element_With_CSS(cssLocator) {
 
         return ElementsValidation.validate_CSS_Locator(cssLocator).then(() => {
-            return cy.get(cssLocator).last().should('be.visible')
+            return Assertions.assert_Last_Element_Exist_And_Visible(cssLocator)
         })
 
     }
@@ -46,7 +48,7 @@ class Elements {
     static click_With_CSS(cssLocator) {
 
         return ElementsValidation.validate_CSS_Locator(cssLocator).then(() => {
-            return cy.get(cssLocator).should('be.visible').click()
+            return Assertions.assert_Element_And_Click(cssLocator)
         })
 
     }
@@ -59,7 +61,7 @@ class Elements {
     static click_With_CSS_Containing_Text(cssLocator, text) {
 
         return ElementsValidation.validate_CSS_Locator_And_Text(cssLocator, text).then(() => {
-            return cy.get(cssLocator).contains(text).should('be.visible').click()
+            return Assertions.assert_Element_Containing_Text_And_Click(cssLocator, text)
         })
 
     }
@@ -72,7 +74,7 @@ class Elements {
     static click_CSS_Element_With_Index(cssLocator, index) {
 
         return ElementsValidation.validate_CSS_Locator_And_Index(cssLocator, index).then(() => {
-            return cy.get(cssLocator).eq(index).should('be.visible').click()
+            return Assertions.assert_Element_Containing_Index_And_Click(cssLocator, index)
         })
         
     }
@@ -86,7 +88,7 @@ class Elements {
     static click_CSS_Element_With_Index_Containing_Text(cssLocator, index, text) {
 
         return ElementsValidation.validate_CSS_Locator_Text_And_Index(cssLocator, index, text).then(() => {
-            return cy.get(cssLocator).contains(text).eq(index).should('be.visible').click()
+            return Assertions.assert_Element_Containing_Text_Index_And_Click(cssLocator, index, text)
         })
         
     }
@@ -109,15 +111,19 @@ class Elements {
     static click_First_Element_With_CSS_Containing_Text(cssLocator, text) {
 
         return ElementsValidation.validate_CSS_Locator_And_Text(cssLocator, text).then(() => {
-            return cy.get(cssLocator).contains(text).first().should('be.visible').click()
+            return Assertions.assert_First_Element_Containing_Text_And_Click(cssLocator, text)
         })
         
     }
 
-    static verify_URL()
+/**
+ * @param {string} expectedURL
+ */     
+
+    static verify_URL(expectedURL)
     {
 
-        return cy.url()
+        return Assertions.assert_URL(expectedURL)
 
     }
 
@@ -129,7 +135,7 @@ class Elements {
     static enter_Value_With_CSS(cssLocator, enterText) {
 
         return ElementsValidation.validate_CSS_Locator_And_Input_Text(cssLocator, enterText).then(() => {
-            return cy.get(cssLocator).should('be.visible').type(enterText)
+            return Assertions.assert_Element_And_Enter_Value(cssLocator, enterText)
         })
 
     }
