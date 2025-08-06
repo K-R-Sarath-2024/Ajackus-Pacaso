@@ -7,132 +7,178 @@ class Assertions {
  */
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */
 
-    static assert_Element_Exist_And_Visible(cssLocator) {
-       return cy.get(cssLocator).should('exist').and('be.visible')
+    static assert_Element_Exist_And_Visible(locator) {
+       return cy.get(locator).should('exist').and('be.visible')
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
+ * @param {number} index
  */    
 
-    static assert_First_Element_Exist_And_Visible(cssLocator) {
+    static assert_Element_With_Index_Exist_And_Visible(locator, index) {
+        return cy.get(locator).eq(index).should('exist').and('be.visible')
+    }
+
+/**
+ * @param {string} locator
+ */    
+
+    static assert_First_Element_Exist_And_Visible(locator) {
         /** @type {string} */
-        const firstElementSelector = `${cssLocator}:first`
+        const firstElementSelector = `${locator}:first`
             return this.assert_Element_Exist_And_Visible(firstElementSelector) 
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */ 
 
-    static assert_Last_Element_Exist_And_Visible(cssLocator) {
+    static assert_Last_Element_Exist_And_Visible(locator) {
         /** @type {string} */
-        const lastElementSelector = `${cssLocator}:last`
+        const lastElementSelector = `${locator}:last`
         return this.assert_Element_Exist_And_Visible(lastElementSelector) 
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */    
 
-    static assert_Element_And_Click(cssLocator) {
-        return this.assert_Element_Exist_And_Visible(cssLocator).then( /** @param {JQuery<HTMLElement>} $element */
+    static assert_Element_And_Click(locator) {
+        return this.assert_Element_Exist_And_Visible(locator).then( /** @param {JQuery<HTMLElement>} $element */
             ($element) => {
             cy.wrap($element).click()
         })
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */    
 
-    static assert_First_Element_And_Click(cssLocator) {
-        return this.assert_First_Element_Exist_And_Visible(cssLocator).click()
+    static assert_First_Element_And_Click(locator) {
+        return this.assert_First_Element_Exist_And_Visible(locator).click()
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */    
 
-    static assert_Last_Element_And_Click(cssLocator) {
-        return this.assert_Last_Element_Exist_And_Visible(cssLocator).click()
+    static assert_Last_Element_And_Click(locator) {
+        return this.assert_Last_Element_Exist_And_Visible(locator).click()
     }    
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} text
  */     
 
-    static assert_Element_Containing_Text_And_Click(cssLocator, text) {
+    static assert_Element_Containing_Text_And_Click(locator, text) {
         /** @type {string} */
-        const combinedSelector = `${cssLocator}:contains("${text}")`
+        const combinedSelector = `${locator}:contains("${text}")`
             return this.assert_Element_And_Click(combinedSelector)
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {number} index
  */    
 
-    static assert_Element_Containing_Index_And_Click(cssLocator, index) {
+    static assert_Element_Containing_Index_And_Click(locator, index) {
         /** @type {string} */
-        const indexedSelector = `${cssLocator}:eq(${index})`
+        const indexedSelector = `${locator}:eq(${index})`
             return this.assert_Element_And_Click(indexedSelector)
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} text
  * @param {number} index
  */      
 
-    static assert_Element_Containing_Text_Index_And_Click(cssLocator, index, text) {
+    static assert_Element_Containing_Text_Index_And_Click(locator, index, text) {
         /** @type {string} */
-        const combinedSelector = `${cssLocator}:contains("${text}"):eq(${index})`
+        const combinedSelector = `${locator}:contains("${text}"):eq(${index})`
             return this.assert_Element_And_Click(combinedSelector)
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} text
  */     
 
-    static assert_First_Element_Containing_Text_And_Click(cssLocator, text) {
+    static assert_First_Element_Containing_Text_And_Click(locator, text) {
         /** @type {string} */
-        const combinedSelector = `${cssLocator}:contains("${text}")`
+        const combinedSelector = `${locator}:contains("${text}")`
             return cy.get(combinedSelector).first().then(() => {
                 return Assertions.assert_Element_And_Click(combinedSelector)
             })
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} enterText
  */    
 
-    static assert_Element_And_Enter_Value(cssLocator, enterText) {
-        return this.assert_Element_Exist_And_Visible(cssLocator).type(enterText)
+    static assert_Element_And_Enter_Value(locator, enterText) {
+        return this.assert_Element_Exist_And_Visible(locator).type(enterText)
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} expectedText
  */     
 
-    static assert_Element_Contains_Text(cssLocator, expectedText) {
-        return this.assert_Element_Exist_And_Visible(cssLocator).should('contain.text', expectedText)
+    static assert_Element_Contains_Text(locator, expectedText) {
+        return this.assert_Element_Exist_And_Visible(locator).should('contain.text', expectedText)
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
+ * @param {string} expectedText
+ * @param {number} index
+ */    
+
+    static assert_Element_Contains_Text_With_Index(locator, expectedText, index) {
+        return this.assert_Element_With_Index_Exist_And_Visible(locator, index).should('contain.text', expectedText)
+    }
+
+/**
+ * @param {string} locator
+ * @param {string[]} expectedTexts
+ * 
+ */    
+
+    static assert_Multiple_Elements_Containing_Text(locator, expectedTexts) {
+        /** @type {string[]} */
+        let actualTexts = [];
+        cy.get(locator).should('exist').and('be.visible').each(($element) => {
+            actualTexts.push($element.text().trim())
+        }).then(() => {
+                expectedTexts.forEach((text) => {
+                    expect(actualTexts).to.include(text)
+                })
+            })      
+    }
+
+/**
+ * @param {string} locator
  * @param {string} expectedText
  */    
 
-    static assert_First_Element_Contains_Text(cssLocator, expectedText) {
-        return this.assert_First_Element_Exist_And_Visible(cssLocator).should('contain.text', expectedText)
+    static assert_First_Element_Contains_Text(locator, expectedText) {
+        return this.assert_First_Element_Exist_And_Visible(locator).should('contain.text', expectedText)
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} expectedText
+ */     
+
+    static assert_Last_Element_Contains_Text(locator, expectedText) {
+        return this.assert_Last_Element_Exist_And_Visible(locator).should('contain.text', expectedText)
     }
 
 /**
