@@ -49,10 +49,11 @@ class ElementsValidation {
             throw new Error("'locator' and 'text' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(locator).filter((_, el) => el.innerText.includes(text)).length === 0) {
+            const elements = $body.find(locator).filter((_, el) => el.innerText.includes(text))
+            if(elements.length === 0) {
                 throw new Error(`Element with selector '${locator}' containing text '${text}' not found`)
             }
-            if(index >= $body.find(locator).filter((_, el) => el.innerText.includes(text)).length === 0) {
+            if(index >= elements.length) {
                 throw new Error("Index Out of Bounds Exception")
             }
         })
@@ -70,10 +71,11 @@ class ElementsValidation {
             throw new Error("'locator' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(locator).length === 0) {
+            const elements = $body.find(locator)
+            if(elements.length === 0) {
                 throw new Error(`Element not found: '${locator}'`);
             }
-            if(index >= $body.find(locator).length === 0) {
+            if(index >= elements.length) {
                 throw new Error("Index Out of Bounds Exception")
             }
         })
@@ -95,9 +97,13 @@ class ElementsValidation {
             if(el.length === 0) {
                 throw new Error(`Element not found: '${locator}'`);
             }
-            const tagName = /** @type {string} */ (el.prop('tagName')).toLowerCase()
-            if(tagName !== 'input' || tagName !== 'textarea') {
-                throw new Error(`Element '${locator}' is not a valid input or textarea. Found: <${tagName}>`)
+            const tagName = el.prop('tagName')
+            if(!tagName) {
+                throw new Error(`Element '${locator}' has no tagName property`)
+            }
+            const tagNameLower = tagName.toLowerCase()
+            if(tagNameLower !== 'input' && tagNameLower !== 'textarea') {
+                throw new Error(`Element '${locator}' is not a valid input or textarea. Found: <${tagNameLower}>`)
             }
         })
 

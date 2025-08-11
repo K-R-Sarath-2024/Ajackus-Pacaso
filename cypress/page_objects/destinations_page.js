@@ -19,11 +19,17 @@ class DestinationsPage {
     All_Locations = '#market-filter-panel-1 div.grid div.type-body-lg-medium'
     
 
+/**
+ * This methods clicks the International heading
+ */
+
     click_International_Heading() {
         Elements.click(this.international_Heading_Locator)
     }
 
 /**
+ * This method verifies the page URL with expected string
+ * 
  * @param {string} expectedText
  */     
 
@@ -32,6 +38,8 @@ class DestinationsPage {
     }
 
 /**
+ * This methods asserts the heading of the International locations
+ * 
  * @param {string} expectedText
  */     
 
@@ -40,6 +48,8 @@ class DestinationsPage {
     }
 
 /**
+ * This methods asserts actual locations with expected texts of International locations
+ * 
  * @param {string[]} expectedTexts
  */     
 
@@ -47,11 +57,17 @@ class DestinationsPage {
         Elements.verify_Multiple_Elements(this.international_Locations, expectedTexts)
     }
 
+/**
+ * This method clicks United States heading
+ */    
+
     click_US_Heading() {
         Elements.click(this.US_Heading_Locator)
     }
 
 /**
+ * This method asserts the heading of the US locations
+ * 
  * @param {string} expectedText
  */     
 
@@ -60,6 +76,8 @@ class DestinationsPage {
     }
 
 /**
+ * This methods asserts actual locations with expected texts Of US locations
+ * 
  * @param {string[]} expectedTexts
  */     
 
@@ -67,11 +85,17 @@ class DestinationsPage {
         Elements.verify_Multiple_Elements(this.US_Locations, expectedTexts)
     }
 
+/**
+ * This method clicks all destinations heading
+ */    
+
     click_All_Destinations_Heading() {
         Elements.click(this.All_Destinations_Heading_Locator)
     }
 
 /**
+ * This method asserts the heading of US and International heading
+ * 
  * @param {string} expectedText1
  * @param {string} expectedText2
  */     
@@ -82,6 +106,8 @@ class DestinationsPage {
     }
 
 /**
+ * This method asserts actual locations with expected texts Of All locations
+ * 
  * @param {string[]} expectedTexts
  */     
 

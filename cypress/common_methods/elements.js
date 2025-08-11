@@ -10,12 +10,11 @@ class Elements {
  */    
 
     static verify(locator, expectedText) {
-
-        return ElementsValidation.validate_Locator(locator).then(() => {
+        return ElementsValidation.validate_Locator(locator).then(()=> {
             return Assertions.assert_Element_Contains_Text(locator, expectedText)
         })
-
-    }
+    }    
+            
 
 /**
  * @param {string} locator
@@ -24,11 +23,10 @@ class Elements {
  */    
     
     static verify_With_Index(locator, expectedText, index) {
-
         return ElementsValidation.validate_Locator_And_Index(locator, index).then(() => {
-            return Assertions.assert_Element_Contains_Text_With_Index(locator, expectedText, index)
+            return Assertions.assert_Element_Contains_Text(locator, expectedText, index)
         })
-
+        
     }
 
 /**
@@ -37,11 +35,10 @@ class Elements {
  */    
 
     static verify_Multiple_Elements(locator, expectedTexts) {
-
         return ElementsValidation.validate_Locator(locator).then(() => {
             return Assertions.assert_Multiple_Elements_Containing_Text(locator, expectedTexts)
         })
-
+        
     }
 
 /**
@@ -50,11 +47,10 @@ class Elements {
  */     
 
     static verify_First_Element(locator, expectedText) {
-
         return ElementsValidation.validate_Locator(locator).then(() => {
-            return Assertions.assert_First_Element_Contains_Text(locator, expectedText)
+            return Assertions.assert_Element_Contains_Text(locator, expectedText, 'first')
         })
-
+        
     }
 
 /**
@@ -63,11 +59,10 @@ class Elements {
  */  
 
     static verify_Last_Element(locator, expectedText) {
-
         return ElementsValidation.validate_Locator(locator).then(() => {
-            return Assertions.assert_Last_Element_Contains_Text(locator, expectedText)
+            return Assertions.assert_Element_Contains_Text(locator, expectedText, 'last')
         })
-
+        
     }
 
 /**
@@ -75,11 +70,9 @@ class Elements {
  */    
 
     static click(locator) {
-
         return ElementsValidation.validate_Locator(locator).then(() => {
-            return Assertions.assert_Element_And_Click(locator)
-        })
-
+            return Assertions.assert_Element_And_Click(locator);
+        })    
     }
 
 /**
@@ -88,11 +81,10 @@ class Elements {
  */    
 
     static click_Element_Containing_Text(locator, text) {
-
         return ElementsValidation.validate_Locator_And_Text(locator, text).then(() => {
             return Assertions.assert_Element_Containing_Text_And_Click(locator, text)
         })
-
+        
     }
 
 /**
@@ -101,9 +93,8 @@ class Elements {
  */    
 
     static click_Element_With_Index(locator, index) {
-
         return ElementsValidation.validate_Locator_And_Index(locator, index).then(() => {
-            return Assertions.assert_Element_Containing_Index_And_Click(locator, index)
+            return Assertions.assert_Element_And_Click(locator, { index: index })
         })
         
     }
@@ -115,9 +106,8 @@ class Elements {
  */    
 
     static click_Element_With_Index_Containing_Text(locator, index, text) {
-
         return ElementsValidation.validate_Locator_Text_And_Index(locator, index, text).then(() => {
-            return Assertions.assert_Element_Containing_Text_Index_And_Click(locator, index, text)
+            return Assertions.assert_Element_And_Click(locator, { index: index, text: text })
         })
         
     }
@@ -140,8 +130,9 @@ class Elements {
     static click_First_Element_Containing_Text(locator, text) {
 
         return ElementsValidation.validate_Locator_And_Text(locator, text).then(() => {
-            return Assertions.assert_First_Element_Containing_Text_And_Click(locator, text)
+            return Assertions.assert_Element_And_Click(locator, { text: text, position: 'first' })
         })
+            
         
     }
 
@@ -162,12 +153,11 @@ class Elements {
  */    
 
     static enter_Value(locator, enterText) {
-
         return ElementsValidation.validate_Locator_And_Input_Text(locator, enterText).then(() => {
-            return Assertions.assert_Element_And_Enter_Value(locator, enterText)
+            return Assertions.assert_Element_And_Enter_Value(locator, enterText);
         })
-
-    }
+    }    
+        
 
 
 }
