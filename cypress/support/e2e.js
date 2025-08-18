@@ -34,7 +34,7 @@ beforeEach(() => {
 
     cy.get('body').then($body => {
       if ($body.find('#CybotCookiebotDialog').length !== 0) {
-        Elements.click_With_CSS('#CybotCookiebotDialogBodyButtonAccept')
+        Elements.click('#CybotCookiebotDialogBodyButtonAccept')
       }
     });
 

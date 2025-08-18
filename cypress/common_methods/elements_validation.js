@@ -3,56 +3,57 @@
 class ElementsValidation {
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  */    
 
-    static validate_CSS_Locator(cssLocator) {
+    static validate_Locator(locator) {
 
-        if(typeof cssLocator !== 'string') {
-            throw new Error("'cssLocator' should be a string but was undefined or null or an empty string")
+        if(typeof locator !== 'string') {
+            throw new Error("'locator' should be a string but was undefined or null or an empty string")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(cssLocator).length === 0) {
-                throw new Error(`Element not found: '${cssLocator}'`);
+            if($body.find(locator).length === 0) {
+                throw new Error(`Element not found: '${locator}'`);
             }
         })
 
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} text
  */
     
-    static validate_CSS_Locator_And_Text(cssLocator, text) {
+    static validate_Locator_And_Text(locator, text) {
 
-        if(typeof cssLocator !== 'string' && typeof text !== 'string') {
-            throw new Error("'cssLocator' and 'text' should be a string but was undefined or null or an empty string")
+        if(typeof locator !== 'string' && typeof text !== 'string') {
+            throw new Error("'locator' and 'text' should be a string but was undefined or null or an empty string")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(cssLocator).filter((_, el) => el.innerText.includes(text)).length === 0) {
-                throw new Error(`Element with selector '${cssLocator}' containing text '${text}' not found`)
+            if($body.find(locator).filter((_, el) => el.innerText.includes(text)).length === 0) {
+                throw new Error(`Element with selector '${locator}' containing text '${text}' not found`)
             }
         })
 
     }
  
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} text
  * @param {number} index
  */    
 
-    static validate_CSS_Locator_Text_And_Index(cssLocator, text, index) {
+    static validate_Locator_Text_And_Index(locator, text, index) {
 
-        if(typeof cssLocator !== 'string' && typeof text !== 'string' && typeof index != 'number') {
-            throw new Error("'cssLocator' and 'text' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
+        if(typeof locator !== 'string' && typeof text !== 'string' && typeof index != 'number') {
+            throw new Error("'locator' and 'text' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(cssLocator).filter((_, el) => el.innerText.includes(text)).length === 0) {
-                throw new Error(`Element with selector '${cssLocator}' containing text '${text}' not found`)
+            const elements = $body.find(locator).filter((_, el) => el.innerText.includes(text))
+            if(elements.length === 0) {
+                throw new Error(`Element with selector '${locator}' containing text '${text}' not found`)
             }
-            if(index >= $body.find(cssLocator).filter((_, el) => el.innerText.includes(text)).length === 0) {
+            if(index >= elements.length) {
                 throw new Error("Index Out of Bounds Exception")
             }
         })
@@ -60,20 +61,21 @@ class ElementsValidation {
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {number} index
  */      
 
-    static validate_CSS_Locator_And_Index(cssLocator, index) {
+    static validate_Locator_And_Index(locator, index) {
 
-        if(typeof cssLocator !== 'string' && typeof index !== 'number') {
-            throw new Error("'cssLocator' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
+        if(typeof locator !== 'string' && typeof index !== 'number') {
+            throw new Error("'locator' should be a string but was undefined or null or an empty string & 'index' should be a non-negative number")
         }
         return cy.get('body').then(($body) => {
-            if($body.find(cssLocator).length === 0) {
-                throw new Error(`Element not found: '${cssLocator}'`);
+            const elements = $body.find(locator)
+            if(elements.length === 0) {
+                throw new Error(`Element not found: '${locator}'`);
             }
-            if(index >= $body.find(cssLocator).length === 0) {
+            if(index >= elements.length) {
                 throw new Error("Index Out of Bounds Exception")
             }
         })
@@ -81,23 +83,27 @@ class ElementsValidation {
     }
 
 /**
- * @param {string} cssLocator
+ * @param {string} locator
  * @param {string} enterText
  */     
 
-    static validate_CSS_Locator_And_Input_Text(cssLocator, enterText) {
+    static validate_Locator_And_Input_Text(locator, enterText) {
 
-        if(typeof cssLocator !== 'string' && typeof enterText !== 'string') {
-            throw new Error("'cssLocator' and 'enterText' should be a string but was undefined or null or an empty string")
+        if(typeof locator !== 'string' && typeof enterText !== 'string') {
+            throw new Error("'locator' and 'enterText' should be a string but was undefined or null or an empty string")
         }
         return cy.get('body').then(($body) => {
-            const el = $body.find(cssLocator)
+            const el = $body.find(locator)
             if(el.length === 0) {
-                throw new Error(`Element not found: '${cssLocator}'`);
+                throw new Error(`Element not found: '${locator}'`);
             }
-            const tagName = /** @type {string} */ (el.prop('tagName')).toLowerCase()
-            if(tagName !== 'input' || tagName !== 'textarea') {
-                throw new Error(`Element '${cssLocator}' is not a valid input or textarea. Found: <${tagName}>`)
+            const tagName = el.prop('tagName')
+            if(!tagName) {
+                throw new Error(`Element '${locator}' has no tagName property`)
+            }
+            const tagNameLower = tagName.toLowerCase()
+            if(tagNameLower !== 'input' && tagNameLower !== 'textarea') {
+                throw new Error(`Element '${locator}' is not a valid input or textarea. Found: <${tagNameLower}>`)
             }
         })
 
