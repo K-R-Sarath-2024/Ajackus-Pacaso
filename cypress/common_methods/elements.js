@@ -156,7 +156,27 @@ class Elements {
         return ElementsValidation.validate_Locator_And_Input_Text(locator, enterText).then(() => {
             return Assertions.assert_Element_And_Enter_Value(locator, enterText);
         })
-    }    
+    }
+
+/** 
+ * @param {string} locator 
+ * @param {string} attribute 
+ * @param {string} expectedValue  
+ */    
+    
+    static verify_Elements_With_Attributes(locator, attribute, expectedValue) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Multiple_Elements_With_Attributes(locator, attribute, expectedValue)
+        })
+    }
+
+/**
+ * Scrolls to top of the page from bottom
+ */    
+
+    static scroll_To_Top() {
+        return Assertions.assert_Scroll_Position_At_The_Top_Of_The_Page()
+    }
         
 
 

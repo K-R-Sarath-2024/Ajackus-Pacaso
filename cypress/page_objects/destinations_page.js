@@ -17,6 +17,13 @@ class DestinationsPage {
     US_Locations = '#market-filter-panel-3 div.grid div.type-body-lg-medium'
     All_Destinations_Heading_Locator = '#market-filter-tab-1'
     All_Locations = '#market-filter-panel-1 div.grid div.type-body-lg-medium'
+    list_button_Locator = '[data-id="List"]'
+    list_And_Grid_View = 'div.grid picture source'
+    grid_button_Locator = '[data-id="Card view"]'
+    bahamas_Location_Grid = '[class*="PortfolioPage_image-gradient"]'
+    bahamas_Listings_Page_Heading = 'div.type-h2'
+    footer_Portfolio_List = 'ul[aria-label="Portfolio"] li'
+    
     
 
 /**
@@ -115,6 +122,86 @@ class DestinationsPage {
         Elements.verify_Multiple_Elements(this.All_Locations, expectedTexts)
     }
 
+/**
+ * This method clicks the List Icon in Destinations Page
+ */    
+
+    click_List_Icon() {
+        Elements.click(this.list_button_Locator)
+    }
+
+/**
+ * This method verifies the List view in Destinations page with the expected attribute value
+ * 
+ * @param {string} attribute
+ * @param {string} expectedValue 
+ */    
+
+    verify_List_View(attribute, expectedValue) {
+        Elements.verify_Elements_With_Attributes(this.list_And_Grid_View, attribute, expectedValue)
+    }
+
+/**
+ * This method clicks the Grid Icon in the Destinations page
+ */    
+
+    click_Grid_Icon() {
+        Elements.click(this.grid_button_Locator)
+    }
+
+/**
+ * This method verifies the Grid view in Destinations page with the expected attribute value
+ * 
+ * @param {string} attribute
+ * @param {string} expectedValue 
+ */    
+
+    verify_Grid_View(attribute, expectedValue) {
+        Elements.verify_Elements_With_Attributes(this.list_And_Grid_View, attribute, expectedValue)
+    }
+
+/**
+ * This method clicks the Bahamas location in Destinations page
+ */    
+
+    click_Bahamas_Location() {
+        Elements.click_First_Element(this.bahamas_Location_Grid)
+    }
+
+/**
+ * This method verifies Bahamas listings page heading with the expected text
+ * 
+ * @param {string} expectedText 
+ */    
+
+    verify_Bahamas_Listings_Page_Heading(expectedText) {
+        cy.wait(2000)
+        Elements.verify_First_Element(this.bahamas_Listings_Page_Heading, expectedText)
+    }
+
+/**
+ * This method clicks US Destinations in Footer in Destinations page
+ */    
+
+    click_US_Destination_In_Footer() {
+        Elements.click_Element_With_Index(this.footer_Portfolio_List, 2)
+    }
+
+/**
+ * This method verifies page scroll from bottom to top
+ */    
+
+    verify_Page_Scrolled_To_The_Top() {
+        Elements.scroll_To_Top()
+    }
+
+/**
+ * This method clicks International Destinations in Footer in Destinations page
+ */    
+
+    click_International_Destination_In_Footer() {
+        Elements.click_Element_With_Index(this.footer_Portfolio_List, 3)
+    }
     
 
 }
