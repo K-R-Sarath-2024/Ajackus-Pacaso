@@ -31,6 +31,18 @@ class Elements {
 
 /**
  * @param {string} locator
+ * @param {number[]} index
+ * @param {string[]} expectedTexts
+ */    
+
+    static verify_Texts_With_Index(locator, index = [], expectedTexts = []) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.verify_Texts_With_Index(locator, index, expectedTexts)
+        })
+    }
+
+/**
+ * @param {string} locator
  * @param {string[]} expectedTexts
  */    
 
@@ -124,6 +136,19 @@ class Elements {
 
 /**
  * @param {string} locator
+ * @param {string} position
+ */    
+
+    static click_Last_Element(locator, position) {
+
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_And_Click(locator, {position: position});
+        }) 
+
+    }
+
+/**
+ * @param {string} locator
  * @param {string} text
  */    
 
@@ -148,6 +173,17 @@ class Elements {
     }
 
 /**
+ * @param {RegExp} expectedURL
+ */    
+
+    static verify_URL_REGEXP(expectedURL) 
+    {
+
+        return Assertions.assert_URL_Using_Regular_Expression(expectedURL)
+
+    }
+
+/**
  * @param {string} locator
  * @param {string} enterText
  */    
@@ -164,9 +200,32 @@ class Elements {
  * @param {string} expectedValue  
  */    
     
-    static verify_Elements_With_Attributes(locator, attribute, expectedValue) {
+    static verify_Elements_With_Attributes_Equal(locator, attribute, expectedValue) {
         return ElementsValidation.validate_Locator(locator).then(() => {
-            return Assertions.assert_Multiple_Elements_With_Attributes(locator, attribute, expectedValue)
+            return Assertions.assert_Multiple_Elements_With_Attributes_Equal(locator, attribute, expectedValue)
+        })
+    }
+
+/** 
+ * @param {string} locator 
+ * @param {string} attribute 
+ * @param {string} expectedValue  
+ */    
+    
+    static verify_Elements_With_Attributes_NotEqual(locator, attribute, expectedValue) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Multiple_Elements_With_Attributes_NotEqual(locator, attribute, expectedValue)
+        })
+    }    
+
+/**
+ * @param {string} locator
+ * @param {string} expectedText
+ */    
+
+    static verify_Multiple_Elements_Having_SameText(locator, expectedText) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Multiple_Elements_Containing_Same_Text(locator, expectedText)
         })
     }
 
@@ -177,8 +236,103 @@ class Elements {
     static scroll_To_Top() {
         return Assertions.assert_Scroll_Position_At_The_Top_Of_The_Page()
     }
-        
 
+/**
+ * @param {string} locator
+ * @param {string} order
+ */    
+
+    static verify_Sorting(locator, order) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Sorted_Values(locator, order)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {number} index
+ */    
+
+    static getAttr_Min_Value(locator, index) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.getAttr_Min_Value(locator, index)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {number} index
+ */     
+
+    static getAttr_Max_Value(locator, index) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.getAttr_Max_Value(locator, index)
+        })
+    }
+
+/**
+ * @param {string} locator
+ */    
+
+    static verify_Price(locator) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Price(locator)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} position
+ */    
+
+    static get_Apply_Button_Count(locator, position) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.number_Aliases(locator, position)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} position
+ */    
+
+    static verify_Count_Equal(locator, position) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.verify_Count_Equal(locator, position)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} position
+ */    
+        
+    static verify_Count_NotEqual(locator, position) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.verify_Count_NotEqual(locator, position)
+        })
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} expectedText
+ */    
+
+    static verify_Does_Not_Contain_Text(locator, expectedText) {
+        return ElementsValidation.validate_Locator(locator).then(()=> {
+            return Assertions.assert_Element_Does_Not_Contains_Text(locator, expectedText)
+        })
+    }
+
+/** 
+ * @param {string} [position]
+ */    
+
+    static verify_Element_Exist_And_Visible(locator, position) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_Exist_And_Visible(locator, position)
+        })
+    }
 
 }
 
