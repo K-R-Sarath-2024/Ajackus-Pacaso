@@ -17,6 +17,16 @@ class DestinationsPage {
     US_Locations = '#market-filter-panel-3 div.grid div.type-body-lg-medium'
     All_Destinations_Heading_Locator = '#market-filter-tab-1'
     All_Locations = '#market-filter-panel-1 div.grid div.type-body-lg-medium'
+    list_button_Locator = '[data-id="List"]'
+    list_And_Grid_View = 'div.grid picture source'
+    grid_button_Locator = '[data-id="Card view"]'
+    bahamas_Location_Grid = '[class*="PortfolioPage_image-gradient"]'
+    bahamas_Listings_Page_Heading = 'div.type-h2'
+    footer_Portfolio_List = 'ul[aria-label="Portfolio"] li'
+    search_Bar_Input = 'button.whitespace-nowrap.text-primary'
+    slider_List = 'ul.slider-list li div.flex-grow'
+    verify_Luxury_Homes_Page_Heading = 'h1.type-h2 span'
+    
     
 
 /**
@@ -24,7 +34,7 @@ class DestinationsPage {
  */
 
     click_International_Heading() {
-        Elements.click(this.international_Heading_Locator)
+       return Elements.click(this.international_Heading_Locator)
     }
 
 /**
@@ -34,7 +44,7 @@ class DestinationsPage {
  */     
 
     verify_Page_URL(expectedText) {
-        Elements.verify_URL(expectedText)
+        return Elements.verify_URL(expectedText)
     }
 
 /**
@@ -44,7 +54,7 @@ class DestinationsPage {
  */     
 
     verify_International_Locations_Text(expectedText) {
-        Elements.verify_With_Index(this.international_And_US_Text_Locator, expectedText, 2)
+        return Elements.verify_With_Index(this.international_And_US_Text_Locator, expectedText, 2)
     }
 
 /**
@@ -54,7 +64,7 @@ class DestinationsPage {
  */     
 
     verify_International_Actual_Locations(expectedTexts) {
-        Elements.verify_Multiple_Elements(this.international_Locations, expectedTexts)
+        return Elements.verify_Multiple_Elements(this.international_Locations, expectedTexts)
     }
 
 /**
@@ -62,7 +72,7 @@ class DestinationsPage {
  */    
 
     click_US_Heading() {
-        Elements.click(this.US_Heading_Locator)
+        return Elements.click(this.US_Heading_Locator)
     }
 
 /**
@@ -72,7 +82,7 @@ class DestinationsPage {
  */     
 
     verify_US_Locations_Text(expectedText) {
-        Elements.verify_With_Index(this.international_And_US_Text_Locator, expectedText, 3)
+        return Elements.verify_With_Index(this.international_And_US_Text_Locator, expectedText, 3)
     }
 
 /**
@@ -82,7 +92,7 @@ class DestinationsPage {
  */     
 
     verify_US_Actual_Locations(expectedTexts) {
-        Elements.verify_Multiple_Elements(this.US_Locations, expectedTexts)
+        return Elements.verify_Multiple_Elements(this.US_Locations, expectedTexts)
     }
 
 /**
@@ -90,7 +100,7 @@ class DestinationsPage {
  */    
 
     click_All_Destinations_Heading() {
-        Elements.click(this.All_Destinations_Heading_Locator)
+        return Elements.click(this.All_Destinations_Heading_Locator)
     }
 
 /**
@@ -112,9 +122,124 @@ class DestinationsPage {
  */     
 
     verify_All_Actual_Locations(expectedTexts) {
-        Elements.verify_Multiple_Elements(this.All_Locations, expectedTexts)
+        return Elements.verify_Multiple_Elements(this.All_Locations, expectedTexts)
     }
 
+/**
+ * This method clicks the List Icon in Destinations Page
+ */    
+
+    click_List_Icon() {
+        return Elements.click(this.list_button_Locator)
+    }
+
+/**
+ * This method verifies the List view in Destinations page with the expected attribute value
+ * 
+ * @param {string} attribute
+ * @param {string} expectedValue 
+ */    
+
+    verify_List_View(attribute, expectedValue) {
+        return Elements.verify_Elements_With_Attributes_Equal(this.list_And_Grid_View, attribute, expectedValue)
+    }
+
+/**
+ * This method clicks the Grid Icon in the Destinations page
+ */    
+
+    click_Grid_Icon() {
+        return Elements.click(this.grid_button_Locator)
+    }
+
+/**
+ * This method verifies the Grid view in Destinations page with the expected attribute value
+ * 
+ * @param {string} attribute
+ * @param {string} expectedValue 
+ */    
+
+    verify_Grid_View(attribute, expectedValue) {
+        return Elements.verify_Elements_With_Attributes_NotEqual(this.list_And_Grid_View, attribute, expectedValue)
+    }
+
+/**
+ * This method clicks the Bahamas location in Destinations page
+ */    
+
+    click_Bahamas_Location() {
+        return Elements.click_First_Element(this.bahamas_Location_Grid)
+    }
+
+/**
+ * This method verifies Bahamas listings page heading with the expected text
+ * 
+ * @param {string} expectedText 
+ */    
+
+    verify_Bahamas_Listings_Page_Heading(expectedText) {
+        cy.wait(2000)
+        return Elements.verify_First_Element(this.bahamas_Listings_Page_Heading, expectedText)
+    }
+
+/**
+ * This method clicks US Destinations in Footer in Destinations page
+ */    
+
+    click_US_Destination_In_Footer() {
+        return Elements.click_Element_With_Index(this.footer_Portfolio_List, 2)
+    }
+
+/**
+ * This method verifies page scroll from bottom to top
+ */    
+
+    verify_Page_Scrolled_To_The_Top() {
+        return Elements.scroll_To_Top()
+    }
+
+/**
+ * This method clicks International Destinations in Footer in Destinations page
+ */    
+
+    click_International_Destination_In_Footer() {
+        return Elements.click_Element_With_Index(this.footer_Portfolio_List, 3)
+    }
+
+/**
+ * This method clicks California location
+ */    
+
+    click_California_Location() {
+        return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 8)
+    }
+
+/**
+ * This method verifies search input
+ * @param {string} expectedText
+ */    
+
+    verify_Search_Input(expectedText) {
+        cy.wait(1000)
+        return Elements.verify_Does_Not_Contain_Text(this.search_Bar_Input, expectedText)
+    }
+
+/**
+ * This method clicks the first slide in collections carousel
+ */    
+
+    click_First_Slider() {
+        return Elements.click_First_Element(this.slider_List)
+    }
+
+/**
+ * This method verifies luxury homes page heading
+ * @param {string} expectedText
+ */    
+
+    verify_Luxury_Page_Heading(expectedText) {
+        return Elements.verify(this.verify_Luxury_Homes_Page_Heading, expectedText)
+    }
     
 
 }
