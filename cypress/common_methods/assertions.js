@@ -329,7 +329,11 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
         if (typeof expectedURL !== 'string') {
             throw new Error(`'expectedURL' must be a non-empty string.`);
         }
-        return cy.url().should('include', expectedURL)
+        return cy.url().should('include', expectedURL).then((currentURL) => {
+            if(!currentURL.includes(expectedURL)) {
+                throw new Error(`Navigation failed. Current URL does not include: "${expectedURL}"`)
+            }
+        })
     }
 
 /**
