@@ -41,7 +41,4 @@ beforeEach(() => {
       }
     });
 
-        homepage.click_Browse_Our_Portfolio_Button();
-        homepage.verify_Page_URL('/destinations');
-
 });

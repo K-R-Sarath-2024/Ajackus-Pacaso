@@ -3,10 +3,16 @@ import HomePage from '../page_objects/home_page'
 import DestinationsPage from '../page_objects/destinations_page'
 import ListingsPage from '../page_objects/listings_page'
 
+const homepage = new HomePage()
 const destinationsPage = new DestinationsPage()
 const listingsPage = new ListingsPage()
 
 describe('Listings Page Functionalities', () => {
+
+        beforeEach(() => {
+                homepage.click_Browse_Our_Portfolio_Button();
+                homepage.verify_Page_URL('/destinations');
+        })
 
     describe('Navigation & Authentication', () => {
 
