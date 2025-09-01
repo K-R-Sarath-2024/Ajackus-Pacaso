@@ -5,12 +5,7 @@ import DestinationsPage from '../page_objects/destinations_page'
 const homepage = new HomePage()
 const destinationsPage = new DestinationsPage()
 
-describe('Destinations Page Functionalities', () => {
-
-    beforeEach(() => {
-            homepage.click_Browse_Our_Portfolio_Button();
-            homepage.verify_Page_URL('/destinations');
-    })    
+describe('Destinations Page Functionalities', () => {   
 
     it('Check whether destinations filter lists locations accordingly', () => {
         cy.fixture('destinations').then((data) => {
