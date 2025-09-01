@@ -138,6 +138,34 @@ static assert_Element_Exist(locatorOrElement, index, position, text) {
 }
 
 /**
+ * Asserts that a DOM element does not exist in the page.
+ * 
+ * @param {string} locator - Locator used to target the element
+ */
+
+static assert_Element_Not_Exist(locator) {
+
+    if (!locator || typeof locator !== 'string') {
+        throw new Error(`Invalid locator provided. Got: ${locator}`);
+    }
+    return cy.get(locator).should('not.exist');
+
+}
+
+/**
+ * Assert that a checkbox or radio button is present, visible, 
+ * and currently unchecked.
+ * 
+ * @param {string} locator - Locator used to target the element
+ */ 
+
+static assert_Element_Unchecked(locator) {
+
+    return this.assert_Element_Exist_And_Visible(locator).and('not.be.checked')
+
+}
+
+/**
  * Asserts that an element exists, is visible, and clicks it.
  * Can target by position ("first", "last"), index, and/or containing text.
  * 

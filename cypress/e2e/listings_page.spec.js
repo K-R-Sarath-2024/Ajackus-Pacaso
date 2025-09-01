@@ -172,6 +172,21 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.featured_Homes_Verify('Featured')
         })
 
+        it('Clearing filters should clear selections in Refine popup', () => {
+
+                destinationsPage.click_Bahamas_Location()
+                destinationsPage.verify_Page_URL('/listings/bahamas')
+                destinationsPage.verify_Bahamas_Listings_Page_Heading('Bahamas Islands')
+
+                listingsPage.close_Tooltip()
+                listingsPage.click_Refine_Button()
+                listingsPage.click_Townhome()
+                listingsPage.click_Apply_Button('last')
+                listingsPage.click_Clear_Filters_Button()
+                listingsPage.verify_Filter_Indication_Is_Removed()
+                listingsPage.click_Refine_Button()
+                listingsPage.verify_Element_Unchecked()
+        })
     })
 
     describe('Toggling List & Map View', () => {

@@ -38,6 +38,7 @@ class ListingsPage {
     map_And_List_Toggle_Button = 'button[class*="map-button"]'
     verify_Map_View = '[class*="slide-in"]'
     verify_List_View = '[class*="slide-out"]'
+    filter_Indication_Locator = '[class*="filter-indicator"]'
 
 /**
  * This method closes the tooltip
@@ -317,6 +318,30 @@ class ListingsPage {
     list_View_Verify() {
         cy.wait(1000)
         return Elements.verify_Element_Exist_And_Visible(this.verify_List_View)
+    }
+
+/**
+ * This method clicks clear filters button 
+ */    
+
+    click_Clear_Filters_Button() {
+        return Elements.click_First_Element(this.clear_Filters_Button)
+    }
+
+/**
+ * This method verifies whether filter indication is removed
+ */    
+
+    verify_Filter_Indication_Is_Removed() {
+        return Elements.verify_Element_Not_Exist(this.filter_Indication_Locator)
+    }
+
+/**
+ * This method verifies that element is not checked 
+ */    
+
+    verify_Element_Unchecked() {
+        return Elements.verify_Element_Not_Checked(this.townhome_Property_Type)
     }
 
 }
