@@ -7,10 +7,13 @@ const destinationsPage = new DestinationsPage()
 
 describe('Destinations Page Functionalities', () => {
 
-    it('Check whether filtering by All Destinations, US destinations and International destinations in Destinations page lists locations accordingly', () => {
+        beforeEach(() => {
+                homepage.click_Browse_Our_Portfolio_Button();
+                homepage.verify_Page_URL('/destinations');
+        })
+
+    it('Destinations filter lists locations accordingly', () => {
         cy.fixture('destinations').then((data) => {
-            homepage.click_Browse_Our_Portfolio_Button();
-            homepage.verify_Page_URL('/destinations');
       
             destinationsPage.click_International_Heading();
             destinationsPage.verify_Page_URL('/destinations#international');
@@ -26,4 +29,43 @@ describe('Destinations Page Functionalities', () => {
 
         })
     })
+
+    it('Should toggle between Grid view and List view', () => {
+
+            destinationsPage.click_List_Icon()
+            destinationsPage.verify_List_View('sizes','40px')
+            destinationsPage.click_Grid_Icon()
+            destinationsPage.verify_Grid_View('sizes','40px')
+    })
+
+    it('Clicking any location should navigate to listings page', () => {
+
+            destinationsPage.click_Bahamas_Location()
+            destinationsPage.verify_Page_URL('/listings/bahamas')
+            destinationsPage.verify_Bahamas_Listings_Page_Heading('Bahamas Islands')
+    })
+
+    it('Clicking US or International destinations from footer should scroll to top', () => {
+
+            destinationsPage.click_US_Destination_In_Footer()
+            destinationsPage.verify_Page_Scrolled_To_The_Top()
+            destinationsPage.click_International_Destination_In_Footer()
+            destinationsPage.verify_Page_Scrolled_To_The_Top()
+    })
+
+    it('Redirecting back from destinations should clear the search bar', () => {
+
+            destinationsPage.click_Bahamas_Location()
+            destinationsPage.verify_Page_URL('/listings/bahamas')
+            cy.go('back')
+            destinationsPage.verify_Search_Input('Bahamas Islands')
+    })
+
+    it('Clicking on the tile in luxury 2nd homes carousel should navigate to that particular page', () => {
+
+            destinationsPage.click_First_Slider()
+            destinationsPage.verify_Page_URL('/luxury-homes/mountain-ski-homes')
+            destinationsPage.verify_Luxury_Page_Heading('Luxury homes near mountains')        
+    })
+
 })
