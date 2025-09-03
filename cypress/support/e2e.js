@@ -18,6 +18,9 @@
 
 import './commands'
 import Elements from '../common_methods/elements'
+import Homepage from '../page_objects/home_page'
+
+const homepage = new Homepage()
 
 beforeEach(() => {
     cy.visit('https://www.development.pacaso.com/', {

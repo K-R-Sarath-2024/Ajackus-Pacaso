@@ -306,6 +306,30 @@ class Elements {
  * @param {string} locator
  * @param {string} position
  */    
+=======
+/** 
+ * @param {string} locator
+ */     
+
+    static verify_Element_Not_Exist(locator) {
+
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_Not_Exist(locator)
+        })
+
+    }
+
+/** 
+ * @param {string} locator
+ */    
+
+    static verify_Element_Not_Checked(locator) {
+
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_Unchecked(locator)
+        })
+
+    }
         
     static verify_Count_NotEqual(locator, position) {
         return ElementsValidation.validate_Locator(locator).then(() => {
