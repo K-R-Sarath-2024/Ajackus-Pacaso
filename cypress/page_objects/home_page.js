@@ -30,7 +30,6 @@ class HomePage {
  */       
 
        click_Browse_Our_Portfolio_Button() {
-        cy.wait(1000)      
         return Elements.click(this.browse_Our_Portfolio_Button_Locator)
        }
 
@@ -48,7 +47,13 @@ class HomePage {
  */        
 
        verify_Page_URL(expectedURL) {
+        cy.wait(1000)
         return Elements.verify_URL(expectedURL)
+       }
+
+       verify_Page_URL_Regular_Expression(expectedURL) {
+        cy.wait(1000)
+        return Elements.verify_URL_REGEXP(expectedURL)      
        }
 
 /**
@@ -90,6 +95,7 @@ class HomePage {
  */       
 
        close_Tool_tip() {
+        cy.wait(2000)          
         return Elements.click_First_Element(this.close_Tooltip_Locator)
        }
 
@@ -193,6 +199,10 @@ class HomePage {
 
        verify_CoOwnership_Simplified_Page_Heading(expectedText) {
         return Elements.verify(this.co_ownership_Page_Heading, expectedText)
+       }
+
+       click_Read_Report_Button() {
+        return Elements.click_Element_With_Index(this.learn_More_Button_Locator, 3)
        }
 }
 

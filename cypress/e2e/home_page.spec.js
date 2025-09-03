@@ -64,10 +64,8 @@ describe('Home Page Functionalities', () => {
         homePage.verify_CoOwnership_Simplified_Page_Heading('Co-﻿ownership, simplified')
     })
 
-
-
-
-
-
-
+    it('Check whether clicking read the report in resale section navigates to resale performance report page', () => {
+        homePage.click_Read_Report_Button()
+        homePage.verify_Page_URL_Regular_Expression(/\/.*-resale-performance-report$/)
+    })
 })
