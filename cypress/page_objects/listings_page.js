@@ -181,9 +181,10 @@ class ListingsPage {
 
 /**
  * This method gets the count from apply button
+ * @param {string} position
  */    
 
-    get_Count_From_Apply_button([position]) {
+    get_Count_From_Apply_button(position) {
         cy.wait(1000)
         return Elements.get_Apply_Button_Count(this.apply_Button_HomeCount, position)
     }
