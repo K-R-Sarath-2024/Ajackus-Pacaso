@@ -30,7 +30,6 @@ class HomePage {
  */       
 
        click_Browse_Our_Portfolio_Button() {
-        cy.wait(1000)
         return Elements.click(this.browse_Our_Portfolio_Button_Locator)
        }
 

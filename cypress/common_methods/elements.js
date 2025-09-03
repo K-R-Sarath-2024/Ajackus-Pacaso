@@ -177,6 +177,30 @@ class Elements {
     static scroll_To_Top() {
         return Assertions.assert_Scroll_Position_At_The_Top_Of_The_Page()
     }
+
+/** 
+ * @param {string} locator
+ */     
+
+    static verify_Element_Not_Exist(locator) {
+
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_Not_Exist(locator)
+        })
+
+    }
+
+/** 
+ * @param {string} locator
+ */    
+
+    static verify_Element_Not_Checked(locator) {
+
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.assert_Element_Unchecked(locator)
+        })
+
+    }
         
 
 
