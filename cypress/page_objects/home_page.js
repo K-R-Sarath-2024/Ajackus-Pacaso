@@ -95,7 +95,7 @@ class HomePage {
  */       
 
        close_Tool_tip() {
-        cy.wait(2000)          
+        cy.wait(3000)          
         return Elements.click_First_Element(this.close_Tooltip_Locator)
        }
 
