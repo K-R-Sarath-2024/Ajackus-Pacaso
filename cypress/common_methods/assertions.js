@@ -16,59 +16,9 @@ class Assertions {
  * @param {string} [text] - Target element containing specific text.
  */
 static assert_Element_Exist_And_Visible(locatorOrElement, index, position, text) {
-    // Parameter validation
-    if (!locatorOrElement) {
-        Cypress.log({
-            name: 'assert_Element_Exist_And_Visible',
-            message: `❌ Invalid locator or element`,
-            consoleProps: () => ({
-                locatorOrElement,
-                index,
-                position,
-                text
-            })
-        });
-        throw new Error(
-            `Invalid locatorOrElement provided.
-             Received: ${locatorOrElement},
-             Index: ${index},
-             Position: ${position},
-             Text: ${text}`
-        );
-    }
+   
+    return this.assert_Element_Exist(locatorOrElement, index, position, text).and('be.visible')
 
-    let element;
-
-   // Case 1: Selector string
-   if (typeof locatorOrElement === 'string') {
-    element = cy.get(locatorOrElement);
-    }
-    // Case 2: Already a Cypress chainable
-    else if (locatorOrElement && locatorOrElement.then && locatorOrElement.should) {
-    element = locatorOrElement;
-    }
-    // Case 3: jQuery element
-    else if (Cypress.dom.isJquery(locatorOrElement)) {
-    element = cy.wrap(locatorOrElement);
-    }
-    // Fallback
-    else {
-    throw new Error('Invalid locatorOrElement provided to assert_Element_Exist_And_Visible');
-    }
-
-    if (typeof index === 'number') {
-        element = element.eq(index);
-    }
-    if (position === 'first') {
-        element = element.first();
-    } else if (position === 'last') {
-        element = element.last();
-    }
-    if (typeof text === 'string') {
-        element = element.contains(text);
-    }
-
-    return element.should('exist').and('be.visible');
 }
 
 /**
@@ -84,16 +34,7 @@ static assert_Element_Exist_And_Visible(locatorOrElement, index, position, text)
 static assert_Element_Exist(locatorOrElement, index, position, text) {
     // Parameter validation
     if (!locatorOrElement) {
-        Cypress.log({
-            name: 'assert_Element_Exist_And_Visible',
-            message: `❌ Invalid locator or element`,
-            consoleProps: () => ({
-                locatorOrElement,
-                index,
-                position,
-                text
-            })
-        });
+        
         throw new Error(
             `Invalid locatorOrElement provided.
              Received: ${locatorOrElement},
@@ -220,8 +161,14 @@ static assert_Element_And_Click(locatorOrElement, options = {}) {
         element = element.eq(options.index);
     }
 
-    return this.assert_Element_Exist_And_Visible(element).click({force: true})
+    return this.assert_Element_Exist(element).click({force: true})
 }
+
+    static assert_Element_Exist_And_Visible_And_Click(locatorOrElement, options = {}) {
+
+        return this.assert_Element_Exist_And_Visible(locatorOrElement, options).click({force: true})
+
+    }
 
 /**
  * Asserts that the first/last element containing specific text exists and clicks it.
@@ -241,12 +188,6 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
     if (position && !['first', 'last'].includes(position)) {
         throw new Error(`Invalid position option: ${position}`);
     }
-
-    // Cypress log for debugging
-    Cypress.log({
-        name: 'assert_Element_Containing_Text_And_Click',
-        message: `Text: "${text}", Position: ${position || 'N/A'}`
-    });
 
     /** @type {string} */
     const combinedSelector = `${locator}:contains("${text}")`;
@@ -281,10 +222,6 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  */    
 
     static assert_Multiple_Elements_Containing_Text(locator, expectedTexts) {
-        Cypress.log({
-            name: 'assert_Multiple_Elements_Containing_Text',
-            message: `Validating multiple elements contain expected texts: ${JSON.stringify(expectedTexts)}`
-        });
 
         // --- Parameter validation ---
     if (!Array.isArray(expectedTexts) || expectedTexts.length === 0) {
@@ -296,7 +233,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
 
         /** @type {string[]} */
         let actualTexts = [];
-        cy.get(locator).should('exist').and('be.visible').each(($element) => {
+        return this.assert_Element_Exist_And_Visible(locator).each(($element) => {
             actualTexts.push($element.text().trim())
         }).then(() => {
                 expectedTexts.forEach((text) => {
@@ -315,10 +252,6 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  *                                   or position ('first' or 'last') to be checked.
  */
     static assert_Element_Contains_Text(locator, expectedText, target) {
-        Cypress.log({
-            name: 'assert_Element_Contains_Text',
-            message: `Checking element contains text: "${expectedText}" ${target ? `(target: ${target})` : ''}`
-        });
 
         // --- Parameter validation ---
     if (typeof expectedText !== 'string' || !expectedText.trim()) {
@@ -339,7 +272,34 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
         }
 
         return this.assert_Element_Exist_And_Visible(element).and('contain.text', expectedText);
-    }    
+    }
+
+/**
+ * Asserts that an element located by the given locator
+ * does **not** contain the specified text.
+ *
+ * This method:
+ * 1. Validates the input parameters (`locator` and `expectedText`).
+ * 2. Uses Cypress `cy.get(locator)` to find the element(s).
+ * 3. Ensures the element(s) exist and are visible via `assert_Element_Exist_And_Visible`.
+ * 4. Asserts that none of the located elements contain the given text.
+ *
+ * @param {string} locator - locator used to find the target element(s).
+ * @param {string} expectedText - The text that the element(s) must not contain.
+ */     
+    
+    static assert_Element_Does_Not_Contains_Text(locator, expectedText) {
+        if (typeof expectedText !== 'string' || !expectedText.trim()) {
+            throw new Error(`'expectedText' must be a non-empty string.`);
+        }
+        if(typeof locator !== 'string') {
+            throw new Error(`locator cannot be an empty string`)
+        }
+    
+            let element = cy.get(locator);
+
+            return this.assert_Element_Exist_And_Visible(element).and('not.contain.text', expectedText)
+    }
 
 /**
  * Asserts that the current URL includes the expected URL fragment.
@@ -348,10 +308,6 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  */     
 
     static assert_URL(expectedURL) {
-        Cypress.log({
-            name: 'assert_URL',
-            message: `Checking if current URL includes: "${expectedURL}"`
-        });
     
         // --- Parameter validation ---
         if (typeof expectedURL !== 'string') {
@@ -365,54 +321,98 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
     }
 
 /**
- * Asserts that multiple elements found by a given locator have (or do not have) 
+ * Asserts that the current URL includes the expected URL fragment.
+ * 
+ * @param {string} expectedURL - The expected part of the URL to verify.
+ */     
+
+    static assert_URL_Using_Regular_Expression(expectedURL) {
+
+        // --- Parameter validation ---
+        if (!(expectedURL instanceof RegExp)) {
+        throw new Error(`'expectedURL' must be a valid RegExp`);
+        }
+        return cy.url().should('match', expectedURL)
+
+    }
+
+/**
+ * Asserts that multiple elements found by a given locator have 
  * a specific attribute value.
  *
  * This method:
  * 1. Locates elements using the provided locator.
  * 2. Ensures the elements exist before continuing.
  * 3. Iterates through each element and checks the given attribute.
- * 4. Validates whether the attribute value is equal to (or not equal to) 
- *    the expected value, based on the `notEqual` flag.
- * 5. Adds Cypress logs for better debugging and test reporting.
+ * 4. Validates whether the attribute value is equal to  
+ *    the expected value.
  *
  * @param {string} locator - locator string for locating elements.
  * @param {string} attribute - The attribute name to check (e.g., "size", "alt", "src").
  * @param {string} expectedValue - The expected attribute value to assert against.
- * 
- * @example
- * // ✅ Asserts that all images have size="40px"
- * Assertions.assert_Multiple_Elements_With_Attributes('img', 'sizes', '40px');
- * 
- * // ❌ Asserts that no image has size="40px"
- * Assertions.assert_Multiple_Elements_With_Attributes('img', 'sizes', '40px', true);
  */
 
-    static assert_Multiple_Elements_With_Attributes(locator, attribute, expectedValue) {
+    static assert_Multiple_Elements_With_Attributes_Equal(locator, attribute, expectedValue) {
 
-        Cypress.log({
-            name: 'assert_Multiple_Elements_With_Attributes',
-            message: `Checking ${locator} for ${attribute}="${expectedValue}"`
-        });
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof attribute !== 'string' || !attribute.trim()) {
+        throw new Error(`'attribute' must be a non-empty string. Received: ${attribute}`);
+    }
+
+    if (typeof expectedValue !== 'string' || expectedValue.length === 0) {
+        throw new Error(`'expectedValue' must be a non-empty string. Received: ${expectedValue}`);
+    }
 
         let element = cy.get(locator)
 
         return this.assert_Element_Exist(element).each(($element) => {
             const actualValue = $element.attr(attribute)
-    
-            if(actualValue !== expectedValue) {
-                assert.isTrue(
-                    actualValue !== expectedValue,
-                    `Attribute "${attribute}" should NOT equal "${expectedValue}"`
-                );
-            } else {
-                assert.isTrue(
-                    actualValue === expectedValue,
-                    `Attribute "${attribute}" should equal "${expectedValue}"`
-                );
-            }
+            expect(actualValue === expectedValue).to.be.true
         })    
     }
+
+/**
+ * Asserts that multiple elements found by a given locator does not have 
+ * a specific attribute value.
+ *
+ * This method:
+ * 1. Locates elements using the provided locator.
+ * 2. Ensures the elements exist before continuing.
+ * 3. Iterates through each element and checks the given attribute.
+ * 4. Validates whether the attribute value is not equal to  
+ *    the expected value.
+ *
+ * @param {string} locator - locator string for locating elements.
+ * @param {string} attribute - The attribute name to check (e.g., "size", "alt", "src").
+ * @param {string} expectedValue - The expected attribute value to assert against.
+ */
+
+    static assert_Multiple_Elements_With_Attributes_NotEqual(locator, attribute, expectedValue) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof attribute !== 'string' || !attribute.trim()) {
+        throw new Error(`'attribute' must be a non-empty string. Received: ${attribute}`);
+    }
+
+    if (typeof expectedValue !== 'string' || expectedValue.length === 0) {
+        throw new Error(`'expectedValue' must be a non-empty string. Received: ${expectedValue}`);
+    }
+
+        let element = cy.get(locator)
+
+        return this.assert_Element_Exist(element).each(($element) => {
+            const actualValue = $element.attr(attribute)
+            expect(actualValue !== expectedValue).to.be.true
+        })    
+    }    
 
 /**
  * Scrolls to the top of the page from bottom
@@ -421,6 +421,340 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
     static assert_Scroll_Position_At_The_Top_Of_The_Page() {
         cy.window().its('scrollY').should('eq', 0)
     }
+
+/**
+ * Asserts that the numeric values extracted from elements located by the given locator 
+ * are sorted in the specified order (`asc` for ascending or `desc` for descending).
+ * 
+ * - Extracts text from each element found by the locator.
+ * - Cleans text by removing `$` and `,`, then converts it into numbers.
+ * - Eliminates duplicate values before sorting.
+ * - Compares the actual values against the expected sorted order.
+ * @param {string} locator
+ * @param {string} order
+ */    
+
+    static assert_Sorted_Values(locator, order) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof order != 'string' || !order.trim()) {
+        throw new Error(`'order' must be a non-empty string {asc or desc}. Received: ${position}`);
+    }
+
+        let element = cy.get(locator)
+
+        let actualValues = []
+
+        return this.assert_Element_Exist_And_Visible(element).each(($element) => {
+            cy.wrap($element).invoke('text').then((text) => {
+                const cleanedText = text.replaceAll(/\$/g, '').replaceAll(/,/g, '').trim()
+                const textToNumber = parseInt(cleanedText)
+                actualValues.push(textToNumber)
+            })
+        }).then(() => {
+            // eliminate duplicates
+            const uniqueValues = [...new Set(actualValues)];
+
+            // sort based on order
+            const sortedValues = [...uniqueValues].sort((a, b) => {
+            return order === 'asc' ? a - b : b - a
+        });
+
+        expect(uniqueValues, `Values should be in ${order.toUpperCase()} order`).to.deep.equal(sortedValues);
+        })
+    }
+
+/**
+ * Retrieves the numeric `value` attribute of an element at a given index
+ * from a list of elements located by the provided locator.
+ * 
+ * - Uses `invoke('attr', 'value')` to extract the attribute.
+ * - Converts the attribute value to a number using `parseInt`.
+ * - Stores the result as a Cypress alias (`@minPrice`) for reuse in other tests.
+ * @param {string} locator 
+ * @param {number} index 
+ */    
+
+    static getAttr_Min_Value(locator, index) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (!Number.isInteger(index) || index < 0) {
+        throw new Error(`'index' must be a non-negative integer. Received: ${index}`);
+    }
+
+        return this.assert_Element_Exist_And_Visible(locator, index).invoke('attr', 'value').then((val) => parseInt(val)).as('minPrice')
+    }
+
+/**
+ * Retrieves the numeric `value` attribute of an element at a given index
+ * from a list of elements located by the provided locator.
+ * 
+ * - Uses `invoke('attr', 'value')` to extract the attribute.
+ * - Converts the attribute value to a number using `parseInt`.
+ * - Stores the result as a Cypress alias (`@maxPrice`) for reuse in other tests.
+ * @param {string} locator 
+ * @param {number} index 
+ */    
+
+    static getAttr_Max_Value(locator, index) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (!Number.isInteger(index) || index < 0) {
+        throw new Error(`'index' must be a non-negative integer. Received: ${index}`);
+    }
+
+        return this.assert_Element_Exist_And_Visible(locator, index).invoke('attr', 'value').then((val) => parseInt(val)).as('maxPrice')
+    }
+
+/**
+ * Asserts that all price values displayed on the page fall within
+ * the range defined by the `@minPrice` and `@maxPrice` aliases.
+ *
+ * - Collects text values from the provided locator.
+ * - Cleans up formatting (removes `$` and `,`).
+ * - Converts the text to numbers and stores them in an array.
+ * - Fetches the `@minPrice` and `@maxPrice` aliases (previously set).
+ * - Validates that each actual value is within the min–max range.
+ * @param {string} locator
+ */    
+
+    static assert_Price(locator) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+        let element = cy.get(locator);
+        let actualValues = [];
+    
+        // collect all prices from UI
+        return this.assert_Element_Exist(element).each(($element) => {
+            cy.wrap($element).invoke('text').then((text) => {
+                const cleanedText = text.replaceAll(/\$/g, '').replaceAll(/,/g, '').trim();
+                const textToNumber = parseInt(cleanedText);
+                actualValues.push(textToNumber);
+            });
+        }).then(() => {
+            // fetch alias values before assertion
+            cy.get('@minPrice').then((minValue) => {
+                cy.get('@maxPrice').then((maxValue) => {
+                    actualValues.forEach((value) => {
+                        expect(value).to.be.within(minValue, maxValue);
+                    });
+                });
+            });
+        });
+    }
+
+/**
+ * Retrieves the text content of a specific element located by `locator`
+ * at the given `position` (index).
+ *
+ * - Ensures the element exists and is visible.
+ * - Fetches the text content of the element.
+ * @param {string} locator
+ * @param {string} position
+ */    
+
+    static get_Text(locator, position) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof position != 'string' || !position.trim()) {
+        throw new Error(`'position' must be a non-empty string {first or last}. Received: ${position}`);
+    }
+
+        let element = cy.get(locator)
+
+        return this.assert_Element_Exist_And_Visible(element, position).invoke('text')
+
+    }
+
+/**
+ * Extracts the first number found in the text of an element
+ * located by `locator` at the given `position` (index).
+ *
+ * - Uses `get_Text` to retrieve the element's text.
+ * - Applies regex to extract digits from the text.
+ * - Converts the extracted string into an integer.
+ * @param {string} locator
+ * @param {string} position
+ */    
+
+    static get_Number(locator, position) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof position != 'string' || !position.trim()) {
+        throw new Error(`'position' must be a non-empty string {first or last}. Received: ${position}`);
+    }
+
+        return this.get_Text(locator, position).then((text) => {
+            const number = parseInt(text.match(/\d+/)[0])
+            return number
+        })
+    }
+
+/**
+ * Stores the numeric value extracted from the element (using `get_Number`) 
+ * as a Cypress alias for later use in tests.
+ *
+ * - Calls `get_Number(locator, position)` internally.
+ * - Saves the result into an alias named `@countFromApplyButton`.
+ * @param {string} locator
+ * @param {string} position
+ */    
+
+    static number_Aliases(locator, position) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof position != 'string' || !position.trim()) {
+        throw new Error(`'position' must be a non-empty string {first or last}. Received: ${position}`);
+    }
+
+        this.get_Number(locator, position).as('countFromApplyButton')
+    }
+
+/**
+ * Verifies that the number extracted from a given element
+ * (using `get_Number(locator, position)`) is equal to the
+ * previously stored alias `@countFromApplyButton`.
+ *
+ * @param {string} locator - locator to target the element(s).
+ * @param {string} position - Index of the element to extract the number from.
+ */    
+
+    static  verify_Count_Equal(locator, position) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof position != 'string' || !position.trim()) {
+        throw new Error(`'position' must be a non-empty string {first or last}. Received: ${position}`);
+    }
+
+        this.get_Number(locator, position).then((actualNumber) => {
+            cy.get('@countFromApplyButton').then((number) => {
+                expect(actualNumber === number).to.be.true
+            })
+        })
+    }
+
+/**
+ * Verifies that the number extracted from a given element
+ * (using `get_Number(locator, position)`) is not equal to the
+ * previously stored alias `@countFromApplyButton`.
+ *
+ * @param {string} locator - locator to target the element(s).
+ * @param {string} position - Index of the element to extract the number from.
+ */    
+
+    static  verify_Count_NotEqual(locator, position) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string' || !locator.trim()) {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (typeof position != 'string' || !position.trim()) {
+        throw new Error(`'position' must be a non-empty string {first or last}. Received: ${position}`);
+    }
+
+        this.get_Number(locator, position).then((actualNumber) => {
+            cy.get('@countFromApplyButton').then((number) => {
+                expect(actualNumber !== number).to.be.true
+            })
+        })
+    }
+
+/**
+ * Verifies that specific elements at given indexes contain the expected texts.
+ *
+ * @param {string} locator - The locator to find the list of elements.
+ * @param {number[]} index - Array of indexes of elements to check.
+ * @param {string[]} expectedTexts - Array of expected texts (aligned with indexes).
+ */    
+
+    static verify_Texts_With_Index(locator, index = [], expectedTexts = []) {
+
+        // --- Parameter validation ---
+    if (typeof locator !== 'string') {
+        throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+    }
+
+    if (!Array.isArray(index) || index.length === 0 || !index.every(i => Number.isInteger(i) && i >= 0)) {
+        throw new Error(`'index' must be a non-empty array of non-negative integers. Received: ${JSON.stringify(index)}`);
+    }
+
+    if (!Array.isArray(expectedTexts) || expectedTexts.length !== index.length || !expectedTexts.every(t => typeof t === 'string' && t.trim())) {
+        throw new Error(`'expectedTexts' must be an array of non-empty strings with the same length as 'index'. 
+        Received: ${JSON.stringify(expectedTexts)}`);
+    }
+        this.assert_Element_Exist_And_Visible(locator, index).then(() => {
+            index.forEach((i) => {
+                this.assert_Element_Exist_And_Visible(locator, i).invoke('text').then((text) => {
+                    expect(text.trim()).to.equal(expectedTexts[i])
+                })
+            })
+        })
+    }
+
+/**
+ * Asserts that multiple elements located by `locator` 
+ * all contain the given expected text.
+ *
+ * @param {string} locator - The selector to find elements.
+ * @param {string} expectedText - The text expected inside each element.
+ */    
+
+    static assert_Multiple_Elements_Containing_Same_Text(locator, expectedText) {
+
+        // Validate parameters
+        if(typeof locator !== 'string') {
+            throw new Error(`Invalid locator: ${locator}`)
+        }
+
+        if (typeof expectedText !== 'string' || !expectedText.trim()) {
+            throw new Error(`'expectedText' must be a non-empty string.`);
+        }
+
+        /** @type {string[]} */
+        let actualTexts = [];
+        this.assert_Element_Exist_And_Visible(locator).each(($element) => {
+            actualTexts.push($element.text().trim())
+        }).then(() => {
+            actualTexts.forEach((text) => {
+                expect(text).to.contain(expectedText)
+            })
+        })
+
+    }
+
         
 }
 

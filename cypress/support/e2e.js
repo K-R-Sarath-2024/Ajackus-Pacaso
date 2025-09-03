@@ -35,6 +35,8 @@ beforeEach(() => {
         return false
     });
 
+    cy.wait(500)
+
     cy.get('body').then($body => {
       if ($body.find('#CybotCookiebotDialog').length !== 0) {
         Elements.click('#CybotCookiebotDialogBodyButtonAccept')
