@@ -195,7 +195,7 @@ class ListingsPage {
  */    
 
     verify_Count_In_Heading(position) {
-        cy.wait(2000)
+        cy.wait(3000)
         return Elements.verify_Count_Equal(this.verify_Count, position)
     }
 

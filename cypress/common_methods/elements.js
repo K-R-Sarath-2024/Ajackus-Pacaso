@@ -300,13 +300,8 @@ class Elements {
         return ElementsValidation.validate_Locator(locator).then(() => {
             return Assertions.verify_Count_Equal(locator, position)
         })
-    }
+    }   
 
-/**
- * @param {string} locator
- * @param {string} position
- */    
-=======
 /** 
  * @param {string} locator
  */     
