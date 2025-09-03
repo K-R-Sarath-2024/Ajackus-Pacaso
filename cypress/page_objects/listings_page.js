@@ -326,6 +326,7 @@ class ListingsPage {
  */    
 
     click_Clear_Filters_Button() {
+        cy.wait(2000)
         return Elements.click_First_Element(this.clear_Filters_Button)
     }
 
@@ -334,6 +335,7 @@ class ListingsPage {
  */    
 
     verify_Filter_Indication_Is_Removed() {
+        cy.wait(1000)
         return Elements.verify_Element_Not_Exist(this.filter_Indication_Locator)
     }
 
