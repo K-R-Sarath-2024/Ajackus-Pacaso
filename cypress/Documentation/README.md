@@ -52,6 +52,21 @@ ELEMENTS
 -- `verify_Does_Not_Contain_Text(locator, expectedText)` -> This method is to assert the element does not contain the expected text
 -- `verify_Element_Exist_And_Visible(locator, position)` -> This is to verify element exist and visible
 
+##3
+ASSERTIONS
+-- `assert_ClassAttr_Includes_Value_With_Index(locator, index, expectedPartialText)` -> This method asserts class attribute value with partial text
+
+ELEMENTS
+-- `verify_Element_Class_Value_With_Index_And_PartialText(locator, index, expectedPartialText)` -> This method verify partial text in class attribute
+
+##4
+ASSERTIONS
+-- `scroll_Into_View(locator, index)` -> scrolls to the element
+-- `get_Ownership_Amount(locator)` -> gets ownership amount
+-- `get_Downpayment_Amount(locator)` -> gets downpayment amount
+-- `compare_OwnershipPrice_DownpaymentPrice(locator1, locator2)` -> compares both the amounts
+
+
 
 
  

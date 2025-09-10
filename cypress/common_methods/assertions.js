@@ -102,8 +102,13 @@ static assert_Element_Not_Exist(locator) {
 
 static assert_Element_Unchecked(locator) {
 
-    return this.assert_Element_Exist_And_Visible(locator).and('not.be.checked')
-
+    return this.assert_Element_Exist(locator).then(($element) => {
+        if($element.prop('checked')) {
+            expect(false).to.be.true
+        } else {
+            expect(true).to.be.true
+        }
+    })
 }
 
 /**
@@ -160,6 +165,13 @@ static assert_Element_And_Click(locatorOrElement, options = {}) {
     if (typeof options.index === 'number') {
         element = element.eq(options.index);
     }
+
+    element = element.then(($element) => {
+        if($element.attr('target') === '_blank') {
+            cy.wrap($element).invoke('removeAttr', 'target');
+        }
+        return cy.wrap($element)
+    })
 
     return this.assert_Element_Exist(element).click({force: true})
 }
@@ -333,6 +345,22 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
         throw new Error(`'expectedURL' must be a valid RegExp`);
         }
         return cy.url().should('match', expectedURL)
+
+    }
+
+/**
+ * Asserts that the current URL does not includes the expected URL fragment.
+ * 
+ * @param {string} expectedURL - The expected part of the URL to verify.
+ */    
+
+    static assert_URL_REGEXP_NOTMATCH(expectedURL) {
+
+        // --- Parameter validation ---
+        if (!(expectedURL instanceof RegExp)) {
+            throw new Error(`'expectedURL' must be a valid RegExp`);
+        }
+        return cy.url().should('not.match', expectedURL)
 
     }
 
@@ -755,6 +783,97 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
 
     }
 
+/**
+ * Asserts that the `class` attribute of a specific element 
+ * (identified by index from a list of matched elements) 
+ * contains the expected partial text.
+ *
+ * @param {string} locator - Locator used to identify elements.
+ * @param {number} index - The index of the element in the list of matched elements (0-based).
+ * @param {string} expectedPartialText - The partial text that should be included in the element's `class` attribute.
+ */    
+
+    static assert_ClassAttr_Includes_Value_With_Index(locator, index, expectedPartialText) {
+
+        // Validate parameters
+        if(typeof locator !== 'string') {
+            throw new Error(`Invalid locator: ${locator}`)
+        }
+
+        if (!Number.isInteger(index) || index < 0) {
+            throw new Error(`'index' must be a non-negative integer. Received: ${index}`);
+        }
+
+        if(typeof expectedPartialText !== 'string') {
+            throw new Error(`expectedPartialText should be a non-empty string. Received: ${expectedPartialText}`)
+        }
+
+        return cy.get(locator).eq(index).invoke('attr', 'class').should('include', expectedPartialText)
+
+    }
+
+/**
+ * Get the ownership amount as a number from the given locator.
+ * Strips "$" and "," from the text content before parsing.
+ *
+ * @param {string} locator - locator for the ownership element
+ */    
+
+    static get_Ownership_Amount(locator) {
+
+        return this.assert_Element_Exist_And_Visible(locator).invoke('text').then((text) => {
+            const cleanedText = text.replaceAll(/\$/g, '').replaceAll(/,/g, '').trim()
+            const number = parseInt(cleanedText)
+            return number
+        })
+
+    }
+
+/**
+ * Get the downpayment amount as a number from the given locator.
+ * Strips "$" and "," from the text content before parsing.
+ *
+ * @param {string} locator - locator for the ownership element
+ */    
+
+    static get_Downpayment_Amount(locator) {
+
+        return this.assert_Element_Exist_And_Visible(locator).invoke('text').then((text) => {
+            const cleanedText = text.replaceAll(/\$/g, '').replaceAll(/,/g, '').trim()
+            const number = parseInt(cleanedText)
+            return number
+        })   
+
+    }
+
+/**
+ * Compare ownership price with downpayment price.
+ * Asserts that ownership price is exactly double the downpayment price.
+ *
+ * @param {string} locator1 - locator for the ownership element
+ * @param {string} locator2 - locator for the downpayment element
+ */    
+
+    static compare_OwnershipPrice_DownpaymentPrice(locator1, locator2) {
+
+        return this.get_Ownership_Amount(locator1).then((ownershipPrice) => {
+            this.get_Downpayment_Amount(locator2).then((downpaymentPrice) => {
+                expect(ownershipPrice).to.eq(downpaymentPrice * 2)
+            })
+        })
+
+    }
+
+/**
+ * Scroll an element into view by its locator and index.
+ * 
+ * @param {string} locator - locator for the target element
+ * @param {number} index - Index of the element in the list
+ */    
+
+    static scroll_Into_View(locator, index) {
+        return cy.get(locator).eq(index).scrollIntoView()
+    }
         
 }
 

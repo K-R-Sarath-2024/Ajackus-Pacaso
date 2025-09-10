@@ -16,7 +16,18 @@ class ElementsValidation {
                 throw new Error(`Element not found: '${locator}'`);
             }
         })
+    }
 
+    static validate_Locator_NotExist(locator) {
+
+        if(typeof locator !== 'string') {
+            throw new Error("'locator' should be a string but was undefined or null or an empty string")
+        }
+        return cy.get('body').then(($body) => {
+            if($body.find(locator).length !== 0) {
+                throw new Error(`Element found: ${locator}`)
+            }
+        })
     }
 
 /**
