@@ -172,7 +172,7 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.featured_Homes_Verify('Featured')
         })
 
-        it.only('Clearing filters should clear selections in Refine popup', () => {
+        it('Clearing filters should clear selections in Refine popup', () => {
 
                 destinationsPage.click_Bahamas_Location()
                 destinationsPage.verify_Page_URL('/listings/bahamas')
