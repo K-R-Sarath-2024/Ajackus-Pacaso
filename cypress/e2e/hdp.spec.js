@@ -78,7 +78,7 @@ describe('HDP Functionalities', () => {
         homePage.verify_CoOwnership_Simplified_Page_Heading('Co-﻿ownership, simplified')
     })
 
-    it('Check whether ownership and downpayment calculation is correct', () => {
+    it('Check whether ownership and downpayment calculation is correct or not', () => {
         homeDetailsPage.click_Ownership_Dropdown()
         homeDetailsPage.choose_Half_Option()
         homeDetailsPage.click_Downpayment_Dropdown()
