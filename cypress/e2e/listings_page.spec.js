@@ -202,5 +202,28 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.click_Map_List_Toggle_Button()
                 listingsPage.list_View_Verify()
         })
+    })
+
+    describe('Page Navigations', () => {
+
+        it('Clicking on page number, directly goes to the desired page', () => {
+                destinationsPage.click_California_Location()
+                destinationsPage.verify_Page_URL('/listings/all_california_ca')
+    
+                listingsPage.close_Tooltip()
+                listingsPage.click_Page_Number()
+                listingsPage.verify_Page('active')
+        })
+
+        it('Clicking forward and back arrow, moves to next and previous pages', () => {
+                destinationsPage.click_California_Location()
+                destinationsPage.verify_Page_URL('/listings/all_california_ca')
+    
+                listingsPage.close_Tooltip()
+                listingsPage.click_Forward_Arrow()
+                listingsPage.verify_NextPage('active')
+                listingsPage.click_Backward_Arrow()
+                listingsPage.verify_PreviousPage('active')
+        })
     })    
 })

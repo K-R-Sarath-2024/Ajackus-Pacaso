@@ -39,13 +39,18 @@ class ListingsPage {
     verify_Map_View = '[class*="slide-in"]'
     verify_List_View = '[class*="slide-out"]'
     filter_Indication_Locator = '[class*="filter-indicator"]'
+    pagination_Locator = 'ul[class^="Pagination"] li div'
+    nextPage_Locator = 'button[data-id="Next page"]'
+    previousPage_Locator = 'button[data-id="Previous page"]'
+    enter_HDP = 'a[target="_blank"]'
+    
 
 /**
  * This method closes the tooltip
  */    
 
     close_Tooltip() {
-        cy.wait(3000)
+        cy.wait(5000)
         Elements.click_First_Element(this.close_Tooltip_Info)
         Elements.click(this.close_Actual_Tooltip)
     }
@@ -345,6 +350,69 @@ class ListingsPage {
 
     verify_Element_Unchecked() {
         return Elements.verify_Element_Not_Checked(this.townhome_Property_Type)
+    }
+
+/**
+ * This method clicks the page number
+ */    
+
+    click_Page_Number() {
+        return Elements.click_Element_With_Index(this.pagination_Locator, 6)
+    }
+
+/**
+ * This method verifies the page number's class attribute with partial text
+ * @param {string} expectedPartialText
+ */    
+
+    verify_Page(expectedPartialText) {
+        cy.wait(2000)
+        return Elements.verify_Element_Class_Value_With_Index_And_PartialText(this.pagination_Locator, 6, expectedPartialText)
+    }
+
+/**
+ * This method clicks forward arrow which goes to next page
+ */    
+
+    click_Forward_Arrow() {
+        return Elements.click_Element_With_Index(this.nextPage_Locator, 1)
+    }
+
+/**
+ * This method verifies next page
+ * @param {string} expectedPartialText  
+ */    
+
+    verify_NextPage(expectedPartialText) {
+        cy.wait(2000)
+        return Elements.verify_Element_Class_Value_With_Index_And_PartialText(this.pagination_Locator, 5, expectedPartialText)
+    }
+
+/**
+ * This method clicks backward arrow which goes to previous page 
+ */    
+
+    click_Backward_Arrow() {
+        return Elements.click_Element_With_Index(this.previousPage_Locator, 1)
+    }
+
+/**
+ * This method verifies previous page
+ * @param {string} expectedPartialText  
+ */     
+
+    verify_PreviousPage(expectedPartialText) {
+        cy.wait(2000)
+        return Elements.verify_Element_Class_Value_With_Index_And_PartialText(this.pagination_Locator, 4, expectedPartialText)
+    }
+
+/**
+ * This methods clicks the home
+ */    
+
+    click_Home() {
+        cy.wait(1500)
+        return Elements.click_Element_With_Index(this.enter_HDP, 3)
     }
 
 }
