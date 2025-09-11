@@ -7,11 +7,12 @@ class Elements {
 /**
  * @param {string} locator
  * @param {string} expectedText
+ * @param {number|string} [target]
  */    
 
-    static verify(locator, expectedText) {
+    static verify(locator, expectedText, target) {
         return ElementsValidation.validate_Locator(locator).then(()=> {
-            return Assertions.assert_Element_Contains_Text(locator, expectedText)
+            return Assertions.assert_Element_Contains_Text(locator, expectedText, target)
         })
     }    
             
@@ -183,6 +184,13 @@ class Elements {
 
     }
 
+    static verify_URL_REGEXP_NOTMATCH(expectedURL)
+    {
+
+        return Assertions.assert_URL_REGEXP_NOTMATCH(expectedURL)
+
+    }
+
 /**
  * @param {string} locator
  * @param {string} enterText
@@ -235,6 +243,12 @@ class Elements {
 
     static scroll_To_Top() {
         return Assertions.assert_Scroll_Position_At_The_Top_Of_The_Page()
+    }
+
+    static scroll_Into_View(locator, index) {
+        return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.scroll_Into_View(locator, index)
+        })
     }
 
 /**
@@ -308,7 +322,7 @@ class Elements {
 
     static verify_Element_Not_Exist(locator) {
 
-        return ElementsValidation.validate_Locator(locator).then(() => {
+        return ElementsValidation.validate_Locator_NotExist(locator).then(() => {
             return Assertions.assert_Element_Not_Exist(locator)
         })
 
@@ -352,6 +366,35 @@ class Elements {
             return Assertions.assert_Element_Exist_And_Visible(locator, position)
         })
     }
+
+/**
+ * @param {string} locator
+ * @param {number} index
+ * @param {string} expectedPartialText
+ */    
+
+    static verify_Element_Class_Value_With_Index_And_PartialText(locator, index, expectedPartialText) {
+
+        return ElementsValidation.validate_Locator_And_Index(locator, index).then(() => {
+            return Assertions.assert_ClassAttr_Includes_Value_With_Index(locator, index, expectedPartialText)
+        })
+
+    }
+
+/**
+ * @param {string} locator1
+ * @param {string} locator2
+ */    
+
+    static verify_Downpayment_Ownership_Price(locator1, locator2) {
+
+        ElementsValidation.validate_Locator(locator1)
+        ElementsValidation.validate_Locator(locator2)
+        return Assertions.compare_OwnershipPrice_DownpaymentPrice(locator1, locator2)
+
+    }
+
+
 
 }
 
