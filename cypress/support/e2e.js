@@ -16,19 +16,15 @@
 // Import commands.js using ES2015 syntax:
 /// <reference types = "Cypress"/>
 
-import './commands'
+import './commands';
+import "cypress-real-events";
 import Elements from '../common_methods/elements'
 import Homepage from '../page_objects/home_page'
 
 const homepage = new Homepage()
 
 beforeEach(() => {
-    cy.visit('https://www.development.pacaso.com/', {
-        auth: {
-            username: "pacaso",
-            password: "rowtogether"
-        }
-    });
+    cy.visit(`${Cypress.env('baseURL')}`)
     Cypress.on('uncaught:exception', (err, runnable) => {
         // returning false here prevents Cypress from
         // failing the test

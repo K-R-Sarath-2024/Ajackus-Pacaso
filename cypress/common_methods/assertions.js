@@ -2,9 +2,6 @@
 
 class Assertions {
 
-/**
- * @returns {*} - A Cypress chainable object to allow further chaining.
- */
 
 /**
  * Asserts that an element exists and is visible.
@@ -182,6 +179,34 @@ static assert_Element_And_Click(locatorOrElement, options = {}) {
 
     }
 
+    /**
+     * Asserts that an element matching a base locator and containing the provided text exists and is visible.
+     * Optionally narrows by first/last occurrence.
+     *
+     * @param {string} locator - The base selector.
+     * @param {string} text - The text to include-match within the element.
+     * @param {('first'|'last')} [position]
+     */
+    static assert_Element_Exist_And_Visible_Containing_Text(locator, text, position) {
+        if (typeof locator !== 'string' || !locator.trim()) {
+            throw new Error(`'locator' must be a non-empty string. Received: ${locator}`);
+        }
+        if (typeof text !== 'string' || !text.trim()) {
+            throw new Error(`'text' must be a non-empty string. Received: ${text}`);
+        }
+        if (position && !['first','last'].includes(position)) {
+            throw new Error(`Invalid position option: ${position}`);
+        }
+
+        let element = cy.get(locator).contains(text);
+        if (position === 'first') {
+            element = element.first();
+        } else if (position === 'last') {
+            element = element.last();
+        }
+        return this.assert_Element_Exist_And_Visible(element);
+    }
+
 /**
  * Asserts that the first/last element containing specific text exists and clicks it.
  * 
@@ -335,7 +360,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
 /**
  * Asserts that the current URL includes the expected URL fragment.
  * 
- * @param {string} expectedURL - The expected part of the URL to verify.
+ * @param {RegExp} expectedURL - The expected part of the URL to verify.
  */     
 
     static assert_URL_Using_Regular_Expression(expectedURL) {
@@ -505,6 +530,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  * - Stores the result as a Cypress alias (`@minPrice`) for reuse in other tests.
  * @param {string} locator 
  * @param {number} index 
+ * @returns {number}
  */    
 
     static getAttr_Min_Value(locator, index) {
@@ -595,6 +621,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  * - Fetches the text content of the element.
  * @param {string} locator
  * @param {string} position
+ * @returns {string}
  */    
 
     static get_Text(locator, position) {
@@ -673,6 +700,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  *
  * @param {string} locator - locator to target the element(s).
  * @param {string} position - Index of the element to extract the number from.
+ * @returns {boolean}
  */    
 
     static  verify_Count_Equal(locator, position) {
@@ -745,7 +773,11 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
     }
         this.assert_Element_Exist_And_Visible(locator, index).then(() => {
             index.forEach((i) => {
-                this.assert_Element_Exist_And_Visible(locator, i).invoke('text').then((text) => {
+                this.assert_Element_Exist_And_Visible(locator, i).invoke('text').then(
+                    /**
+                     * @param {string} text
+                     */
+                    (text) => {
                     expect(text.trim()).to.equal(expectedTexts[i])
                 })
             })
@@ -873,6 +905,15 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
 
     static scroll_Into_View(locator, index) {
         return cy.get(locator).eq(index).scrollIntoView()
+    }
+
+/**
+ * @param {string} locator
+ * @param {string} [position]
+ */    
+
+    static mouseHover(locator, position) {
+        return this.assert_Element_Exist_And_Visible(locator, position).realHover();
     }
         
 }

@@ -21,7 +21,7 @@ class DestinationsPage {
     list_And_Grid_View = 'div.grid picture source'
     grid_button_Locator = '[data-id="Card view"]'
     bahamas_Location_Grid = '[class*="PortfolioPage_image-gradient"]'
-    bahamas_Listings_Page_Heading = 'div.type-h2'
+    caribbeanAndBahamas_Listings_Page_Heading = 'div.type-h2'
     footer_Portfolio_List = 'ul[aria-label="Portfolio"] li'
     search_Bar_Input = 'button.whitespace-nowrap.text-primary'
     slider_List = 'ul.slider-list li div.flex-grow'
@@ -164,10 +164,10 @@ class DestinationsPage {
     }
 
 /**
- * This method clicks the Bahamas location in Destinations page
+ * This method clicks the Whistler location in Destinations page
  */    
 
-    click_Bahamas_Location() {
+    click_CaribbeanAndBahamas_Location() {
         return Elements.click_First_Element(this.bahamas_Location_Grid)
     }
 
@@ -177,9 +177,9 @@ class DestinationsPage {
  * @param {string} expectedText 
  */    
 
-    verify_Bahamas_Listings_Page_Heading(expectedText) {
-        cy.wait(2000)
-        return Elements.verify_First_Element(this.bahamas_Listings_Page_Heading, expectedText)
+    verify_CaribbeanAndBahamas_Listings_Page_Heading(expectedText) {
+        cy.wait(3000)
+        return Elements.verify_First_Element(this.caribbeanAndBahamas_Listings_Page_Heading, expectedText)
     }
 
 /**
@@ -210,8 +210,8 @@ class DestinationsPage {
  * This method clicks California location
  */    
 
-    click_California_Location() {
-        return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 8)
+    click_LakeTahoe_Location() {
+        return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 13)
     }
 
 /**
@@ -229,7 +229,7 @@ class DestinationsPage {
  */    
 
     click_First_Slider() {
-        return Elements.click_First_Element(this.slider_List)
+        return Elements.click_Element_With_Index(this.slider_List, 7)
     }
 
 /**

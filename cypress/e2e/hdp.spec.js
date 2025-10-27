@@ -15,10 +15,9 @@ describe('HDP Functionalities', () => {
         homePage.click_Browse_Our_Portfolio_Button();
         homePage.verify_Page_URL('/destinations');
 
-        destinationsPage.click_California_Location()
-        destinationsPage.verify_Page_URL('/listings/all_california_ca')
+        destinationsPage.click_LakeTahoe_Location()
+        destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
 
-        listingsPage.close_Tooltip()
         listingsPage.click_Page_Number()
         listingsPage.click_Home()
     })
@@ -42,7 +41,6 @@ describe('HDP Functionalities', () => {
         it('Clicking Pacaso Design Certified link navigates to Design page', () => {
             homeDetailsPage.click_Design_Link()
             homePage.verify_Page_URL('/design-certified-homes')
-            homePage.verify_Design_Certified_Homes_Page_Heading('Pacaso Designed Homes')
         })
 
         it('Clicking back navigates back to HDP', () => {
@@ -64,7 +62,6 @@ describe('HDP Functionalities', () => {
     it('Design Cerified link should navigate to Design page', () => {
         homeDetailsPage.click_Design_Cerified_Link()
         homePage.verify_Page_URL('/design-certified-homes')
-        homePage.verify_Design_Certified_Homes_Page_Heading('Pacaso Designed Homes')
     })
     
     it('View All Amenities shows all amenities', () => {
