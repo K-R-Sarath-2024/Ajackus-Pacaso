@@ -38,10 +38,11 @@ describe('Destinations Page Functionalities', () => {
     })
 
     it('Clicking any location should navigate to listings page', () => {
-
+            cy.fixture('listings').then((data) => {
             destinationsPage.click_CaribbeanAndBahamas_Location()
-            destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
-            destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading('Caribbean & Bahamas')
+            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+            destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading(data.caribbeanAndbahamas.heading)
+            })
     })
 
     it('Clicking US or International destinations from footer should scroll to top', () => {
@@ -53,11 +54,12 @@ describe('Destinations Page Functionalities', () => {
     })
 
     it('Redirecting back from destinations should clear the search bar', () => {
-
+            cy.fixture('listings').then((data) => {
             destinationsPage.click_CaribbeanAndBahamas_Location()
-            destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
+            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
             cy.go('back')
             destinationsPage.verify_Search_Input('Caribbean & Bahamas')
+            })    
     })
 
     it('Clicking on the tile in luxury 2nd homes carousel should navigate to that particular page', () => {

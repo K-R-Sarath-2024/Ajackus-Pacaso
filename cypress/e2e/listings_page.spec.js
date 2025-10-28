@@ -17,22 +17,24 @@ describe('Listings Page Functionalities', () => {
     describe('Navigation & Authentication', () => {
 
         it('Clicking Heart icon, triggers login if not logged in', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
-                destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading('Caribbean & Bahamas')
+                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading(data.caribbeanAndbahamas.heading)
     
                 listingsPage.click_Heart_Icon()
                 listingsPage.verify_Sign_In_Popup_If_Not_LoggedIn('Sign up or sign in')
+                })        
         })
 
     })
     
     describe('Sorting & Filtering', () => {
         it('Low to high and high to low price sorting should list homes accordingly', () => {
-    
+                cy.fixture('listings').then((data) => {
+
                 destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
+                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Low_To_High_Price_Sort()
@@ -41,13 +43,14 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.click_Filter_Button()
                 listingsPage.click_High_To_Low_Price_Sort()
                 listingsPage.click_Apply_Button('last')
-                listingsPage.verify_High_To_Low_Price_Sorted_Values('desc')       
+                listingsPage.verify_High_To_Low_Price_Sorted_Values('desc') 
+                })  
         })
     
         it('Filtering by price should list homes accordingly', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
+                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()
@@ -58,13 +61,13 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.select_Max_Value()
                 listingsPage.click_Apply_Button('last')
                 listingsPage.verify_Price_Between_Min_And_Max()
-                
+                })        
         })
     
         it('Count in apply button and heading should be same', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL('/listings/caribbean_bahamas')
+                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()
@@ -76,24 +79,28 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.get_Count_From_Apply_button('last')
                 listingsPage.click_Apply_Button('last')
                 listingsPage.verify_Count_In_Heading('first')
+                })         
         })
     
         it('Filtering by bedrooms and bathrooms should list homes accordingly', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.choose_Bedroom()
                 listingsPage.choose_Bathroom()
                 listingsPage.click_Apply_Button('last')
                 listingsPage.verify_Bed_And_BathRooms([0,1], ['4', '4'])
+                })
+    
+                
         })
     
         it('Filtering by Featured should list Featured homes accordingly', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
 
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Featured_Homes()
@@ -101,38 +108,41 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.click_Apply_Button('last')
                 listingsPage.verify_Count_In_Heading('first')
                 listingsPage.featured_Homes_Verify('Featured')
+                })        
         })
     
         it('No results after filtering should show Clear Filters button and heading as "0 listings"', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-    
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+            
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Townhome()
                 listingsPage.get_Count_From_Apply_button('last')
                 listingsPage.click_Apply_Button('last')
                 listingsPage.verify_Count_In_Heading('first')
                 listingsPage.verify_ClearFilters_Button('first')
+                })
         })
 
         it('Check whether clicking Clear All in Refine popup in listings page clears the selection', () => {
-    
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-    
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+            
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Townhome()
                 listingsPage.get_Count_From_Apply_button('last')
                 listingsPage.click_Clear_All_Button()
                 listingsPage.verify_Count_In_Apply_button('last')
+                })
         })
     
         it('Clearing filters should clear selections in Refine popup', () => {
-
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+        
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Townhome()
                 listingsPage.click_Apply_Button('last')
@@ -140,41 +150,50 @@ describe('Listings Page Functionalities', () => {
                 listingsPage.verify_Filter_Indication_Is_Removed()
                 listingsPage.click_Filter_Button()
                 listingsPage.verify_Element_Unchecked()
+                })        
         })
     })
 
     describe('Toggling List & Map View', () => {
 
         it('Toggling between Map and List view should show Map and List view accordingly', () => {
-                
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-    
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+            
                 listingsPage.click_Map_List_Toggle_Button()
                 listingsPage.map_View_Verify()
                 listingsPage.click_Map_List_Toggle_Button()
                 listingsPage.list_View_Verify()
+                })
+                
         })
     })
 
     describe('Page Navigations', () => {
 
         it('Clicking on page number, directly goes to the desired page', () => {
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-    
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+            
                 listingsPage.click_Page_Number()
                 listingsPage.verify_Page('active')
+                })
+                
         })
 
         it('Clicking forward and back arrow, moves to next and previous pages', () => {
+                cy.fixture('listings').then((data) => {
                 destinationsPage.click_LakeTahoe_Location()
-                destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
-
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
+        
                 listingsPage.click_Forward_Arrow()
                 listingsPage.verify_NextPage('active')
                 listingsPage.click_Backward_Arrow()
                 listingsPage.verify_PreviousPage('active')
+                })
+                
         })
     })    
 })
