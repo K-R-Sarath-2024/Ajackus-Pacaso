@@ -1,0 +1,11 @@
+{
+    "caribbeanAndbahamas" : {
+        "url" : "/listings/caribbean_bahamas",
+        "heading" : "Caribbean & Bahamas"
+    },
+
+    "LakeTahoe" : {
+        "url" : "/listings/lake_tahoe_ca",
+        "heading" : "Lake Tahoe"
+    }
+}

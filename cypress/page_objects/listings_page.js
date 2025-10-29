@@ -12,7 +12,7 @@ class ListingsPage {
 
     heart_Icon_Of_Homes = '[data-id="Heart"]'
     signIn_Popup = 'h1.type-subhead'
-    refine_Button = 'button[data-id="Refine"]'
+    filter_Button = 'button[data-id="Filter"]'
     price_Low_To_High_Locator = 'input[value="Price: Low to high"]'
     apply_Button = 'button[class^="Button"]'
     low_To_High_And_High_To_Low_Sorted_Values_Locator = 'mark.text-primary'
@@ -46,16 +46,6 @@ class ListingsPage {
     
 
 /**
- * This method closes the tooltip
- */    
-
-    close_Tooltip() {
-        cy.wait(5000)
-        Elements.click_First_Element(this.close_Tooltip_Info)
-        Elements.click(this.close_Actual_Tooltip)
-    }
-
-/**
  * This method clicks the Heart symbol
  */    
 
@@ -74,12 +64,12 @@ class ListingsPage {
     }
 
 /**
- * This method clicks Refine button
+ * This method clicks Filter button
  */    
 
-    click_Refine_Button() {
-        cy.wait(750)
-       return Elements.click_Element_With_Index(this.refine_Button, 2)
+    click_Filter_Button() {
+        cy.wait(4500)
+       return Elements.click_Element_With_Index(this.filter_Button, 2)
     }
 
 /**
@@ -209,7 +199,7 @@ class ListingsPage {
  */    
 
     choose_Bedroom() {
-        return Elements.click_Element_With_Index(this.select_Bedroom, 5)
+        return Elements.click_Element_With_Index(this.select_Bedroom, 4)
     }
 
 /**
@@ -217,7 +207,7 @@ class ListingsPage {
  */    
 
     choose_Bathroom() {
-        return Elements.click_Element_With_Index(this.select_Bathroom, 5)
+        return Elements.click_Element_With_Index(this.select_Bathroom, 4)
     }
 
 /**
@@ -229,23 +219,6 @@ class ListingsPage {
     verify_Bed_And_BathRooms(index = [], expectedTexts = []) {
         cy.wait(1000)
         return Elements.verify_Texts_With_Index(this.verify_Bedroom_And_Bathroom, index, expectedTexts)
-    }
-
-/**
- * This method clicks Pacaso homes option from Refine popup
- */    
-
-    click_Pacaso_Homes() {
-        return Elements.click(this.pacaso_homes)
-    }
-
-/**
- * This method verifies pacaso homes
- * @param {string} expectedText
- */    
-
-    pacaso_Homes_Verify(expectedText) {
-        return Elements.verify_Multiple_Elements_Having_SameText(this.verify_pacaso_homes, expectedText)
     }
 
 /**
@@ -305,6 +278,7 @@ class ListingsPage {
  */    
 
     click_Map_List_Toggle_Button() {
+        cy.wait(2000)
         return Elements.click_First_Element(this.map_And_List_Toggle_Button)
     }
 
@@ -357,7 +331,8 @@ class ListingsPage {
  */    
 
     click_Page_Number() {
-        return Elements.click_Element_With_Index(this.pagination_Locator, 6)
+        cy.wait(4000)
+        return Elements.click_Element_With_Index(this.pagination_Locator, 3)
     }
 
 /**
@@ -375,6 +350,7 @@ class ListingsPage {
  */    
 
     click_Forward_Arrow() {
+        cy.wait(4000)
         return Elements.click_Element_With_Index(this.nextPage_Locator, 1)
     }
 
@@ -393,6 +369,7 @@ class ListingsPage {
  */    
 
     click_Backward_Arrow() {
+        cy.wait(2000)
         return Elements.click_Element_With_Index(this.previousPage_Locator, 1)
     }
 

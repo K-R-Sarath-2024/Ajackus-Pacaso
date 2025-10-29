@@ -26,7 +26,6 @@ describe('Destinations Page Functionalities', () => {
             destinationsPage.click_All_Destinations_Heading()
             destinationsPage.verify_All_Locations_Text('International', 'United States')
             destinationsPage.verify_All_Actual_Locations(data.AllLocations)
-
         })
     })
 
@@ -39,10 +38,11 @@ describe('Destinations Page Functionalities', () => {
     })
 
     it('Clicking any location should navigate to listings page', () => {
-
-            destinationsPage.click_Bahamas_Location()
-            destinationsPage.verify_Page_URL('/listings/bahamas')
-            destinationsPage.verify_Bahamas_Listings_Page_Heading('Bahamas Islands')
+            cy.fixture('listings').then((data) => {
+            destinationsPage.click_CaribbeanAndBahamas_Location()
+            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+            destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading(data.caribbeanAndbahamas.heading)
+            })
     })
 
     it('Clicking US or International destinations from footer should scroll to top', () => {
@@ -54,11 +54,12 @@ describe('Destinations Page Functionalities', () => {
     })
 
     it('Redirecting back from destinations should clear the search bar', () => {
-
-            destinationsPage.click_Bahamas_Location()
-            destinationsPage.verify_Page_URL('/listings/bahamas')
+            cy.fixture('listings').then((data) => {
+            destinationsPage.click_CaribbeanAndBahamas_Location()
+            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
             cy.go('back')
-            destinationsPage.verify_Search_Input('Bahamas Islands')
+            destinationsPage.verify_Search_Input('Caribbean & Bahamas')
+            })    
     })
 
     it('Clicking on the tile in luxury 2nd homes carousel should navigate to that particular page', () => {

@@ -100,7 +100,7 @@ class HomeDetailsPage {
  */    
 
     click_Follow_Button(position) {
-        cy.wait(1000)
+        cy.wait(3000)
         return Elements.click_Last_Element(this.follow_Button, position)
     }
 

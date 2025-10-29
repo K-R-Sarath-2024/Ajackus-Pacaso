@@ -394,6 +394,17 @@ class Elements {
 
     }
 
+/**
+ * @param {string} locator
+ * @param {string} [position]
+ */    
+
+    static mouseHover(locator, position) {
+       return ElementsValidation.validate_Locator(locator).then(() => {
+            return Assertions.mouseHover(locator, position)
+        })
+    }
+
 
 
 }
