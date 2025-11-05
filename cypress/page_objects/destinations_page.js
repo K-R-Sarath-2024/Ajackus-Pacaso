@@ -211,6 +211,7 @@ class DestinationsPage {
  */    
 
     click_LakeTahoe_Location() {
+        cy.wait(2000)
         return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 14)
     }
 
