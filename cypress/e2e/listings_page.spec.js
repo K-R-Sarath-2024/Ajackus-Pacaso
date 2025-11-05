@@ -2,16 +2,20 @@
 import HomePage from '../page_objects/home_page'
 import DestinationsPage from '../page_objects/destinations_page'
 import ListingsPage from '../page_objects/listings_page'
+import Header from '../page_objects/header'
 
 const homepage = new HomePage()
 const destinationsPage = new DestinationsPage()
 const listingsPage = new ListingsPage()
+const header = new Header()
 
 describe('Listings Page Functionalities', () => {
 
         beforeEach(() => {
-                homepage.click_Browse_Our_Portfolio_Button();
-                homepage.verify_Page_URL('/destinations');
+                header.mouseHover_Portfolio('first')
+                header.verify_MegaDropdown()
+                header.click_Elements_In_MegaDropdown('Destinations')
+                homepage.verify_Page_URL('/destinations')
         })
 
     describe('Navigation & Authentication', () => {
