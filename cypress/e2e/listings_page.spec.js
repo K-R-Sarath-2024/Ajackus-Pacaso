@@ -37,8 +37,8 @@ describe('Listings Page Functionalities', () => {
         it('Low to high and high to low price sorting should list homes accordingly', () => {
                 cy.fixture('listings').then((data) => {
 
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Low_To_High_Price_Sort()
@@ -53,8 +53,8 @@ describe('Listings Page Functionalities', () => {
     
         it('Filtering by price should list homes accordingly', () => {
                 cy.fixture('listings').then((data) => {
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()
@@ -70,8 +70,8 @@ describe('Listings Page Functionalities', () => {
     
         it('Count in apply button and heading should be same', () => {
                 cy.fixture('listings').then((data) => {
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()

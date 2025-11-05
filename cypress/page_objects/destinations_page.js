@@ -211,7 +211,7 @@ class DestinationsPage {
  */    
 
     click_LakeTahoe_Location() {
-        return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 13)
+        return Elements.click_Element_With_Index(this.bahamas_Location_Grid, 14)
     }
 
 /**
