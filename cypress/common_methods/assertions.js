@@ -360,6 +360,21 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
 /**
  * Asserts that the current URL includes the expected URL fragment.
  * 
+ * @param {string} expectURL - The expected part of the URL to verify.
+ */     
+
+    static assert_URL_Another_Origin(expectURL) {
+        if (typeof expectURL !== 'string') {
+            throw new Error(`'expectedURL' must be a non-empty string.`);
+        }
+        return cy.origin('https://www.pacaso.com', { args: { expectURL } }, ({ expectURL }) => {
+            cy.url().should('include', expectURL)
+        })
+    }
+
+/**
+ * Asserts that the current URL includes the expected URL fragment.
+ * 
  * @param {RegExp} expectedURL - The expected part of the URL to verify.
  */     
 
@@ -772,13 +787,13 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
         Received: ${JSON.stringify(expectedTexts)}`);
     }
         this.assert_Element_Exist_And_Visible(locator, index).then(() => {
-            index.forEach((i) => {
+            index.forEach((i, position) => {
                 this.assert_Element_Exist_And_Visible(locator, i).invoke('text').then(
                     /**
                      * @param {string} text
                      */
                     (text) => {
-                    expect(text.trim()).to.equal(expectedTexts[i])
+                    expect(text.trim()).to.equal(expectedTexts[position])
                 })
             })
         })
@@ -913,7 +928,7 @@ static assert_Element_Containing_Text_And_Click(locator, text, position) {
  */    
 
     static mouseHover(locator, position) {
-        return this.assert_Element_Exist_And_Visible(locator, position).realHover();
+        return this.assert_Element_Exist_And_Visible(locator, position).scrollIntoView().trigger('mouseover', { force: true });
     }
         
 }

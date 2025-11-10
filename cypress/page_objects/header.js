@@ -22,7 +22,7 @@ class Header{
     }
 
     verify_MegaDropdown() {
-        cy.wait(1000)
+        cy.wait(3000)
         Elements.verify_Element_Exist_And_Visible(this.mega_Dropdown)
     }
 

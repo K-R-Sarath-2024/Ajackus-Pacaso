@@ -173,6 +173,13 @@ class Elements {
 
     }
 
+    static verify_URL_Another_Origin(expectedURL)
+    {
+
+        return Assertions.assert_URL_Another_Origin(expectedURL)
+
+    }
+
 /**
  * @param {RegExp} expectedURL
  */    

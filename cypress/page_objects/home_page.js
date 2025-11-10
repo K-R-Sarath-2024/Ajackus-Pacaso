@@ -43,6 +43,11 @@ class HomePage {
         return Elements.verify_URL(expectedURL)
        }
 
+       verify_Page_URL_Another_Origin(expectedURL) {
+        cy.wait(1000)
+        return Elements.verify_URL_Another_Origin(expectedURL)    
+       }
+
        verify_Page_URL_Regular_Expression(expectedURL) {
         cy.wait(1000)
         return Elements.verify_URL_REGEXP(expectedURL)      
