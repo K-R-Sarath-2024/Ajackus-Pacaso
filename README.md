@@ -64,7 +64,7 @@ The suite expects `baseURL` and `siteUrl`. Provide them via the CLI `--env` flag
 - If tests are flaky locally, try `--headed` and increase viewport or timeouts as needed.
 - Clear Cypress cache if needed: `npx cypress cache clear`.
 
-###Please use below git commands (for future engineer)
+### Please use below git commands (for future engineer)
 - For cloning into your system, create a project folder and go into the folder
 `mkdir my-projects`
 `cd my-projects`
@@ -86,5 +86,3 @@ The suite expects `baseURL` and `siteUrl`. Provide them via the CLI `--env` flag
 `git push origin branch-name`
 - Pull latest changes from main branch
 `git pull origin main`
-
-###Contributor - K R Sarath (Senior QA Engineer)
