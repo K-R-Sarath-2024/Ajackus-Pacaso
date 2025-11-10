@@ -2,16 +2,20 @@
 import HomePage from '../page_objects/home_page'
 import DestinationsPage from '../page_objects/destinations_page'
 import ListingsPage from '../page_objects/listings_page'
+import Header from '../page_objects/header'
 
 const homepage = new HomePage()
 const destinationsPage = new DestinationsPage()
 const listingsPage = new ListingsPage()
+const header = new Header()
 
 describe('Listings Page Functionalities', () => {
 
         beforeEach(() => {
-                homepage.click_Browse_Our_Portfolio_Button();
-                homepage.verify_Page_URL('/destinations');
+                header.mouseHover_Portfolio('first')
+                header.verify_MegaDropdown()
+                header.click_Elements_In_MegaDropdown('Destinations')
+                homepage.verify_Page_URL('/destinations')
         })
 
     describe('Navigation & Authentication', () => {
@@ -33,8 +37,8 @@ describe('Listings Page Functionalities', () => {
         it('Low to high and high to low price sorting should list homes accordingly', () => {
                 cy.fixture('listings').then((data) => {
 
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Low_To_High_Price_Sort()
@@ -49,8 +53,8 @@ describe('Listings Page Functionalities', () => {
     
         it('Filtering by price should list homes accordingly', () => {
                 cy.fixture('listings').then((data) => {
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()
@@ -66,8 +70,8 @@ describe('Listings Page Functionalities', () => {
     
         it('Count in apply button and heading should be same', () => {
                 cy.fixture('listings').then((data) => {
-                destinationsPage.click_CaribbeanAndBahamas_Location()
-                destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+                destinationsPage.click_LakeTahoe_Location()
+                destinationsPage.verify_Page_URL(data.LakeTahoe.url)
     
                 listingsPage.click_Filter_Button()
                 listingsPage.click_Min_Value_Dropdown()

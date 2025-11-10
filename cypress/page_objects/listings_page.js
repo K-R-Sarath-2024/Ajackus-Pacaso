@@ -332,7 +332,7 @@ class ListingsPage {
 
     click_Page_Number() {
         cy.wait(4000)
-        return Elements.click_Element_With_Index(this.pagination_Locator, 3)
+        return Elements.click_Element_With_Index(this.pagination_Locator, 1)
     }
 
 /**

@@ -3,17 +3,21 @@ import HomePage from '../page_objects/home_page'
 import DestinationsPage from '../page_objects/destinations_page'
 import ListingsPage from '../page_objects/listings_page'
 import HomeDetailsPage from '../page_objects/hdp'
+import Header from '../page_objects/header'
 
 const homePage = new HomePage()
 const destinationsPage = new DestinationsPage()
 const listingsPage = new ListingsPage()
 const homeDetailsPage = new HomeDetailsPage()
+const header = new Header()
 
 describe('HDP Functionalities', () => {
 
     beforeEach(() => {
-        homePage.click_Browse_Our_Portfolio_Button();
-        homePage.verify_Page_URL('/destinations');
+        header.mouseHover_Portfolio('first')
+        header.verify_MegaDropdown()
+        header.click_Elements_In_MegaDropdown('Destinations')
+        homePage.verify_Page_URL('/destinations')
 
         destinationsPage.click_LakeTahoe_Location()
         destinationsPage.verify_Page_URL('/listings/lake_tahoe_ca')
