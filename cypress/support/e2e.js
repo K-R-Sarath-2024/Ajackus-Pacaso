@@ -39,4 +39,7 @@ beforeEach(() => {
       }
     });
 
+    cy.clearAllCookies()
+    cy.clearAllLocalStorage()
+
 });

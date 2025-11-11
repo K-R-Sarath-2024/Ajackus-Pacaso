@@ -7,5 +7,10 @@
     "LakeTahoe" : {
         "url" : "/listings/lake_tahoe_ca",
         "heading" : "Lake Tahoe"
+    },
+
+    "CostaRica" : {
+        "url" : "/listings/costa_rica",
+        "heading" : "Costa Rica"
     }
 }

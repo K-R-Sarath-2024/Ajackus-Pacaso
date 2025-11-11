@@ -43,9 +43,9 @@ describe('Destinations Page Functionalities', () => {
 
     it('Clicking any location should navigate to listings page', () => {
             cy.fixture('listings').then((data) => {
-            destinationsPage.click_CaribbeanAndBahamas_Location()
-            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
-            destinationsPage.verify_CaribbeanAndBahamas_Listings_Page_Heading(data.caribbeanAndbahamas.heading)
+            destinationsPage.click_CostaRica_Location()
+            destinationsPage.verify_Page_URL(data.CostaRica.url)
+            destinationsPage.verify_CostaRica_Listings_Page_Heading(data.CostaRica.heading)
             })
     })
 
@@ -59,10 +59,10 @@ describe('Destinations Page Functionalities', () => {
 
     it('Redirecting back from destinations should clear the search bar', () => {
             cy.fixture('listings').then((data) => {
-            destinationsPage.click_CaribbeanAndBahamas_Location()
-            destinationsPage.verify_Page_URL(data.caribbeanAndbahamas.url)
+            destinationsPage.click_CostaRica_Location()
+            destinationsPage.verify_Page_URL(data.CostaRica.url)
             cy.go('back')
-            destinationsPage.verify_Search_Input('Caribbean & Bahamas')
+            destinationsPage.verify_Search_Input('Costa Rica')
             })    
     })
 
